@@ -39,35 +39,119 @@
       scrollbar-width: none;
     }
     @media print {
+      @page {
+        size: letter portrait;
+        margin: 0.35in 0.4in 0.35in 0.4in;
+      }
+      *, *::before, *::after {
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
       .no-print { display: none !important; }
-      body { 
-        background: white !important; 
-        color: #0f172a !important; 
-        font-size: 11px !important;
-        -webkit-print-color-adjust: exact !important; 
-        print-color-adjust: exact !important; 
+      html, body {
+        background: white !important;
+        color: #0f172a !important;
+        font-size: 9.5px !important;
+        line-height: 1.25 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
-      .tab-pane { 
-        display: block !important; 
-        page-break-after: always !important; 
-        break-after: page !important; 
-        margin-bottom: 2.5rem !important;
-        padding-top: 1rem !important;
+      main {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
       }
-      .tab-pane.hidden { display: block !important; }
-      .tab-pane:last-of-type { 
-        page-break-after: auto !important; 
-        break-after: auto !important; 
+      .tab-pane {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        page-break-before: always !important;
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+        break-before: page !important;
+        break-after: page !important;
+        break-inside: avoid !important;
+        height: 9.9in !important;
+        max-height: 9.9in !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        padding: 0.1in 0 !important;
+        margin: 0 !important;
+      }
+      .tab-pane:first-of-type {
+        page-break-before: auto !important;
+        break-before: auto !important;
+      }
+      .tab-pane.hidden {
+        display: flex !important;
+      }
+      .print-tab-header {
+        display: block !important;
+        margin-bottom: 0.35rem !important;
+        padding-bottom: 0.25rem !important;
+        border-bottom: 1.5px solid #0284c7 !important;
+      }
+      .print-tab-header h2 {
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+      }
+      .print-tab-header p {
+        font-size: 9px !important;
+      }
+      .space-y-6 > * + * { margin-top: 0.4rem !important; }
+      .space-y-5 > * + * { margin-top: 0.35rem !important; }
+      .space-y-4 > * + * { margin-top: 0.3rem !important; }
+      .space-y-3 > * + * { margin-top: 0.25rem !important; }
+      .space-y-2 > * + * { margin-top: 0.2rem !important; }
+      .gap-6 { gap: 0.45rem !important; }
+      .gap-4 { gap: 0.35rem !important; }
+      .gap-3 { gap: 0.25rem !important; }
+      .p-6, .p-5 { padding: 0.45rem !important; }
+      .p-4, .p-3.5 { padding: 0.35rem !important; }
+      .p-3 { padding: 0.25rem !important; }
+      .rounded-2xl { border-radius: 0.5rem !important; }
+      .rounded-xl { border-radius: 0.375rem !important; }
+
+      .chart-container-lg {
+        height: 140px !important;
+        max-height: 140px !important;
+      }
+      .chart-container-sm {
+        height: 110px !important;
+        max-height: 110px !important;
+      }
+      canvas {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        display: block !important;
       }
       .max-h-96 { max-height: none !important; overflow: visible !important; }
-      .overflow-x-auto { overflow: visible !important; }
-      table { page-break-inside: auto; }
-      tr { page-break-inside: avoid; page-break-after: auto; }
-      .shadow-sm, .shadow-md, .shadow-xs, .shadow-xl, .shadow-2xl { box-shadow: none !important; }
-      input[type=range] { display: none !important; }
-      button { display: none !important; }
-      .print-tab-header { display: block !important; }
-      canvas { max-width: 100% !important; }
+      .overflow-x-auto, .overflow-y-auto { overflow: visible !important; }
+      table {
+        font-size: 8px !important;
+        width: 100% !important;
+      }
+      th, td {
+        padding: 2px 4px !important;
+      }
+      input, textarea, select {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        color: #0f172a !important;
+        font-weight: 700 !important;
+      }
+      input[type=range], button {
+        display: none !important;
+      }
+      .bg-slate-50, .bg-indigo-50, .bg-emerald-50, .bg-amber-50, .bg-blue-50, .bg-teal-50, .bg-rose-50 {
+        background-color: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+      }
     }
     .print-tab-header { display: none; }
   </style>
@@ -170,7 +254,7 @@
     </div>
   </header>
 
-  <div class="bg-white border-b border-slate-200/80 py-3 shadow-xs">
+  <div class="bg-white border-b border-slate-200/80 py-3 shadow-xs no-print">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center divide-x divide-slate-100">
       <div>
         <p class="text-xs text-slate-500 font-medium">Total Portfolio Net Assets</p>
@@ -214,7 +298,7 @@
 
     <!-- TAB 1: SUMMARY -->
     <section id="tab-summary" class="tab-pane space-y-6">
-      <div class="print-tab-header border-b-2 border-brand-600 pb-3 mb-4">
+      <div class="print-tab-header">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-bold text-slate-900">Henchmen Partners &bull; Wealth Advisory Plan</h2>
@@ -246,7 +330,7 @@
                 <span class="inline-flex items-center"><span class="w-3 h-3 rounded-full bg-brand-600 mr-1.5"></span>B3 5+y Equities & Securities</span>
               </div>
             </div>
-            <div class="relative w-full h-72 sm:h-80">
+            <div class="relative w-full h-72 sm:h-80 chart-container-lg">
               <canvas id="summaryWealthChart"></canvas>
             </div>
           </div>
@@ -275,7 +359,7 @@
             </h2>
             <p class="text-xs text-slate-500 mb-4">Capital distributed across self-equity, immediate, midterm & long horizons</p>
             
-            <div class="relative w-full h-48 flex items-center justify-center">
+            <div class="relative w-full h-48 flex items-center justify-center chart-container-sm">
               <canvas id="summaryDonutChart"></canvas>
             </div>
 
@@ -376,7 +460,7 @@
 
     <!-- TAB 2: INCOME -->
     <section id="tab-income" class="tab-pane hidden space-y-6">
-      <div class="print-tab-header border-b-2 border-emerald-600 pb-3 mb-4">
+      <div class="print-tab-header">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-bold text-slate-900">Henchmen Partners &bull; Wealth Advisory Plan</h2>
@@ -544,7 +628,7 @@
           <span>10-Year Income vs. Outflow Escalation Projection</span>
         </h3>
         <p class="text-xs text-slate-500 mb-4">Simulating individual stream inflation vs baseline living cost inflation and bad debt amortization</p>
-        <div class="relative w-full h-64">
+        <div class="relative w-full h-64 chart-container-lg">
           <canvas id="incomeComparisonChart"></canvas>
         </div>
       </div>
@@ -553,7 +637,7 @@
 
     <!-- TAB 3: INVESTMENTS -->
     <section id="tab-investments" class="tab-pane hidden space-y-6">
-      <div class="print-tab-header border-b-2 border-brand-600 pb-3 mb-4">
+      <div class="print-tab-header">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-bold text-slate-900">Henchmen Partners &bull; Wealth Advisory Plan</h2>
@@ -1056,7 +1140,7 @@
 
     <!-- TAB 4: EFFICIENCY -->
     <section id="tab-efficiency" class="tab-pane hidden space-y-6">
-      <div class="print-tab-header border-b-2 border-indigo-600 pb-3 mb-4">
+      <div class="print-tab-header">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-bold text-slate-900">Henchmen Partners &bull; Wealth Advisory Plan</h2>
@@ -1136,7 +1220,7 @@
               <span>Tax Structure Distribution</span>
             </h3>
             
-            <div class="relative w-full h-48 flex items-center justify-center">
+            <div class="relative w-full h-48 flex items-center justify-center chart-container-sm">
               <canvas id="efficiencyTaxDonutChart"></canvas>
             </div>
 
@@ -1182,7 +1266,7 @@
 
     <!-- TAB 5: PEACE OF MIND -->
     <section id="tab-peace" class="tab-pane hidden space-y-6">
-      <div class="print-tab-header border-b-2 border-indigo-900 pb-3 mb-4">
+      <div class="print-tab-header">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-bold text-slate-900">Henchmen Partners &bull; Wealth Advisory Plan</h2>
@@ -1382,7 +1466,7 @@
 
     <!-- TAB 6: TRUE WEALTH -->
     <section id="tab-truewealth" class="tab-pane hidden space-y-6">
-      <div class="print-tab-header border-b-2 border-teal-600 pb-3 mb-4">
+      <div class="print-tab-header">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-bold text-slate-900">Henchmen Partners &bull; Wealth Advisory Plan</h2>
@@ -1432,7 +1516,7 @@
             </div>
             <p class="text-xs text-slate-500 mt-2 mb-3">Symmetric shape indicates balanced vitality, whereas lopsided shapes flag burnout or isolation risks.</p>
 
-            <div class="relative w-full h-64 flex items-center justify-center">
+            <div class="relative w-full h-64 flex items-center justify-center chart-container-lg">
               <canvas id="trueWealthRadarChart"></canvas>
             </div>
 
@@ -1503,7 +1587,7 @@
     </div>
   </footer>
 
-  <div id="saveModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs hidden p-4">
+  <div id="saveModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs hidden p-4 no-print">
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-5 sm:p-6 border border-slate-200 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div class="flex items-center space-x-2">
@@ -1549,7 +1633,7 @@
     </div>
   </div>
 
-  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl border border-slate-800 flex items-center space-x-2.5">
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl border border-slate-800 flex items-center space-x-2.5 no-print">
     <i id="toastIcon" data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
     <span id="toastMessage" class="font-medium">Notification message</span>
   </div>
@@ -1837,18 +1921,36 @@
 
       document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('hidden'));
 
-      renderSummaryCharts();
+      Chart.defaults.animation = false;
+
+      const b0 = { initial: parseFloat(document.getElementById('b0Initial')?.value) || 0, ret: (parseFloat(document.getElementById('b0Return')?.value) || 0)/100, monthly: parseFloat(document.getElementById('b0Monthly')?.value) || 0, transYear: parseInt(document.getElementById('b0TransitionYear')?.value) || 5, p2Action: document.getElementById('b0Phase2Action')?.value || 'contribute', p2Amount: parseFloat(document.getElementById('b0Phase2Amount')?.value) || 0 };
+      const b1 = { initial: parseFloat(document.getElementById('b1Initial')?.value) || 0, ret: (parseFloat(document.getElementById('b1Return')?.value) || 0)/100, monthly: parseFloat(document.getElementById('b1Monthly')?.value) || 0, transYear: parseInt(document.getElementById('b1TransitionYear')?.value) || 5, p2Action: document.getElementById('b1Phase2Action')?.value || 'withdraw', p2Amount: parseFloat(document.getElementById('b1Phase2Amount')?.value) || 0 };
+      const b2 = { initial: parseFloat(document.getElementById('b2Initial')?.value) || 0, ret: (parseFloat(document.getElementById('b2Return')?.value) || 0)/100, monthly: parseFloat(document.getElementById('b2Monthly')?.value) || 0, transYear: parseInt(document.getElementById('b2TransitionYear')?.value) || 10, p2Action: document.getElementById('b2Phase2Action')?.value || 'withdraw', p2Amount: parseFloat(document.getElementById('b2Phase2Amount')?.value) || 0 };
+      const b3 = { initial: parseFloat(document.getElementById('b3Initial')?.value) || 0, ret: (parseFloat(document.getElementById('b3Return')?.value) || 0)/100, monthly: parseFloat(document.getElementById('b3Monthly')?.value) || 0, transYear: parseInt(document.getElementById('b3TransitionYear')?.value) || 15, p2Action: document.getElementById('b3Phase2Action')?.value || 'withdraw', p2Amount: parseFloat(document.getElementById('b3Phase2Amount')?.value) || 0 };
+      const projection = runCompoundingSimulation(b0, b1, b2, b3, 30);
+
+      renderSummaryCharts(projection);
       renderIncomeChart();
       renderEfficiencyDonutChart();
       renderTrueWealthRadarChart();
+
+      [summaryWealthChartInstance, summaryDonutChartInstance, incomeComparisonChartInstance, efficiencyDonutChartInstance, trueWealthRadarChartInstance].forEach(chart => {
+        if (chart) {
+          chart.resize();
+          chart.update('none');
+        }
+      });
+
       lucide.createIcons();
 
       setTimeout(() => {
         window.print();
-      }, 250);
+        Chart.defaults.animation = true;
+      }, 400);
     }
 
     window.addEventListener('afterprint', () => {
+      Chart.defaults.animation = true;
       switchTab(currentActiveTab);
     });
 
@@ -2263,7 +2365,7 @@
 
       const totalPortfolioToday = b1.initial + b2.initial + b3.initial;
       const longTermPortfolioToday = b2.initial + b3.initial;
-      const totalAllCapital = b0.initial + b1.initial + b2.initial + b3.initial;
+      const totalAllCapital = b0.initial + totalPortfolioToday;
 
       const stripTotalAssets = document.getElementById('stripTotalAssets');
       if (stripTotalAssets) stripTotalAssets.textContent = formatCurrency(totalPortfolioToday);
@@ -2699,7 +2801,7 @@
 
     function serializeCurrentPlan() {
       return {
-        version: "2.3",
+        version: "2.4",
         savedAt: new Date().toISOString(),
         clientName: document.getElementById('clientNameInput')?.value || "Client",
         yearsToRetire: parseInt(document.getElementById('yearsToRetireInput')?.value) || 15,
@@ -3624,7 +3726,6 @@
       const expTaxes = parseFloat(document.getElementById('expTaxes')?.value) || 0;
 
       const debtMetrics = getBadDebtTotals();
-      const annualDebtService = debtMetrics.totalMonthlyOutflow * 12;
       const baseExpensesExDebt = (expHousing + expEssentials + expLifestyle + expTaxes) * 12;
 
       const labels = [];
