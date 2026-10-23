@@ -1177,6 +1177,17 @@
                 <span id="effTaxableVal" class="font-bold">$0 (0%)</span>
               </div>
             </div>
+
+            <!-- Taxable Turnover Efficiency Setting -->
+            <div class="pt-3 border-t border-slate-100">
+              <label class="flex items-start space-x-2.5 p-2 rounded-xl bg-slate-50 border border-slate-200/90 cursor-pointer hover:bg-slate-100 transition">
+                <input type="checkbox" id="chkLowTurnover" onchange="recalcAll()" checked class="mt-0.5 rounded text-indigo-600 focus:ring-0 w-4 h-4">
+                <div class="text-xs">
+                  <span class="font-bold text-slate-800 block">Taxable Brokerage: Low Turnover (&lt;25%)</span>
+                  <span class="text-slate-500 text-[11px] leading-tight block">Avoids realizing unnecessary short/long-term capital gains distributions (-10 pts if unchecked).</span>
+                </div>
+              </label>
+            </div>
           </div>
 
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3 text-xs">
@@ -1246,7 +1257,7 @@
           </div>
 
           <p class="text-xs text-slate-600 leading-relaxed">
-            By maintaining a dedicated 0-5 year cash & stable buffer in Bucket 1, clients never have to liquidate equities at depressed prices during a severe market pullback.
+            By maintaining a dedicated 0-5 year cash & stable buffer in Bucket 1, clients never have to liquidate equities at depressed prices during a severe market pullback. Income taxes are excluded as earned tax burdens fall to zero if earned inflows cease.
           </p>
 
           <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-100 space-y-2 text-xs">
@@ -1255,7 +1266,7 @@
               <span id="shieldB1Cash" class="font-bold text-slate-800">$0</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-slate-500">Mandatory Spending (Housing + Essentials + Taxes + Bad Debt):</span>
+              <span class="text-slate-500">Essential Survival Outflows (Housing + Essentials + Bad Debt):</span>
               <span id="shieldMonthlySpend" class="font-bold text-slate-800">$0</span>
             </div>
             <div class="flex justify-between pt-2 border-t border-slate-200 font-semibold">
@@ -2726,6 +2737,9 @@
         badDebtItems: badDebtItems,
         bigTicketItems: bigTicketItems,
         accountsList: accountsList,
+        efficiencySettings: {
+          lowTurnover: !!document.getElementById('chkLowTurnover')?.checked
+        },
         buckets: {
           b0: {
             investedIn: document.getElementById('b0InvestedIn')?.value || "",
@@ -2889,6 +2903,13 @@
       if (Array.isArray(plan.accountsList)) {
         accountsList = plan.accountsList;
         renderAccountsTable();
+      }
+
+      if (plan.efficiencySettings) {
+        const chk = document.getElementById('chkLowTurnover');
+        if (chk && plan.efficiencySettings.lowTurnover !== undefined) {
+          chk.checked = !!plan.efficiencySettings.lowTurnover;
+        }
       }
 
       if (plan.buckets) {
@@ -3186,12 +3207,20 @@
         else taxable += a.balance;
       });
       const variance = totalAllocated - totalPortfolioToday;
+      const isLowTurnover = !!document.getElementById('chkLowTurnover')?.checked;
+      const shelteredTotal = taxFree + taxDef;
+      const shelteredPct = totalAllocated > 0 ? (shelteredTotal / totalAllocated) * 100 : 0;
+      const effTaxScoreTxt = document.getElementById('effTaxScore')?.textContent || "";
+
       csv += `Total Market Bucket Capital,$${Math.round(totalPortfolioToday)}\n`;
       csv += `Total Allocated in Accounts,$${Math.round(totalAllocated)}\n`;
       csv += `Reconciliation Variance,$${Math.round(variance)},"${variance === 0 ? 'Balanced' : (variance > 0 ? 'Surplus' : 'Deficit')}"\n`;
       csv += `Tax-Free Accounts Total,$${Math.round(taxFree)},${totalAllocated > 0 ? (taxFree / totalAllocated * 100).toFixed(1) : 0}%\n`;
       csv += `Tax-Deferred Accounts Total,$${Math.round(taxDef)},${totalAllocated > 0 ? (taxDef / totalAllocated * 100).toFixed(1) : 0}%\n`;
-      csv += `Taxable Accounts Total,$${Math.round(taxable)},${totalAllocated > 0 ? (taxable / totalAllocated * 100).toFixed(1) : 0}%\n\n`;
+      csv += `Combined Sheltered Capital (Tax-Deferred + Tax-Free),$${Math.round(shelteredTotal)},${shelteredPct.toFixed(1)}%\n`;
+      csv += `Taxable Accounts Total,$${Math.round(taxable)},${totalAllocated > 0 ? (taxable / totalAllocated * 100).toFixed(1) : 0}%\n`;
+      csv += `Taxable Low Turnover (<25%),${isLowTurnover ? "Yes (Optimized)" : "No (-10 penalty)"}\n`;
+      csv += `Tax Location Score,"${effTaxScoreTxt}"\n\n`;
 
       csv += `ACCOUNT REGISTER\n`;
       csv += `Account Name,Tax Classification,Balance ($),Target Wealth Bucket,Share of Assets (%)\n`;
@@ -3206,8 +3235,8 @@
       csv += `=========================================================================\n`;
       csv += `Audit Domain,Parameter,Value,Benchmark / Standard\n`;
       csv += `Sequence-Of-Returns Shield,Liquid Cash Reserves,$${Math.round(b1.initial)},Bucket 1 Cash Equivalents\n`;
-      csv += `Sequence-Of-Returns Shield,Mandatory Monthly Spending,$${Math.round(mandatoryMonthly)},Housing + Essentials + Taxes + Bad Debt Outflows\n`;
-      csv += `Sequence-Of-Returns Shield,Bear Market Survival Runway,${liquidMonths.toFixed(1)} Months,Benchmark: 12 to 24 Months\n`;
+      csv += `Sequence-Of-Returns Shield,Essential Monthly Survival Outflows,$${Math.round(survivalMonthly)},Housing + Essentials + Bad Debt Outflows (Taxes Excluded)\n`;
+      csv += `Sequence-Of-Returns Shield,Bear Market Survival Runway,${runwayMonths.toFixed(1)} Months,Benchmark: 12 to 24 Months\n`;
       csv += `Peace-Of-Mind Index,Overall Resilience Score,${stripSleepScore},Scale 0-100 (Below 3mo Runway < 30)\n`;
       csv += `Peace-Of-Mind Index,Audit Classification,"${stripSleepBadge}","Fiduciary Risk Assessment"\n\n`;
 
@@ -3427,13 +3456,45 @@
       if (effTaxDefVal) effTaxDefVal.textContent = `${formatCurrency(taxDef)} (${pctDef}%)`;
       if (effTaxableVal) effTaxableVal.textContent = `${formatCurrency(taxable)} (${pctTaxable}%)`;
 
-      let effScore = 90;
-      if (Math.abs(variance) > 50000) effScore -= 10;
-      if (taxFree / (totalAllocated || 1) < 0.15) effScore -= 8;
-      effScore = Math.max(50, Math.min(100, effScore));
+      // NEW SCORING LOGIC:
+      // 1. Calculate percentage in tax-deferred + tax-free
+      const shelteredTotal = taxFree + taxDef;
+      const shelteredPct = totalAllocated > 0 ? (shelteredTotal / totalAllocated) * 100 : 0;
+
+      // 2. Base score: 100 if >= 70%. For every 10% drop below 70%, subtract 5 points
+      let baseScore = 100;
+      if (shelteredPct < 70) {
+        const dropBrackets = Math.ceil((70 - shelteredPct) / 10);
+        baseScore = 100 - (dropBrackets * 5);
+      }
+
+      // 3. Low turnover check (<25%) in taxable brokerage: -10 pts if unchecked
+      const isLowTurnover = !!document.getElementById('chkLowTurnover')?.checked;
+      let turnoverPenalty = isLowTurnover ? 0 : 10;
+
+      let effScore = baseScore - turnoverPenalty;
+      effScore = Math.max(0, Math.min(100, Math.round(effScore)));
+
+      let ratingLabel = "Superior";
+      if (effScore >= 90) {
+        ratingLabel = "Superior";
+      } else if (effScore >= 75) {
+        ratingLabel = "Strong";
+      } else if (effScore >= 60) {
+        ratingLabel = "Moderate";
+      } else {
+        ratingLabel = "Needs Tuning";
+      }
 
       if (effTaxScore) {
-        effTaxScore.textContent = `${effScore}/100 (${effScore >= 85 ? 'Superior' : 'Needs Tuning'})`;
+        effTaxScore.textContent = `${effScore}/100 (${ratingLabel})`;
+        if (effScore >= 85) {
+          effTaxScore.className = "text-base font-bold text-indigo-600";
+        } else if (effScore >= 70) {
+          effTaxScore.className = "text-base font-bold text-emerald-600";
+        } else {
+          effTaxScore.className = "text-base font-bold text-amber-600";
+        }
       }
 
       renderEfficiencyDonutChart(taxFree, taxDef, taxable);
@@ -3490,12 +3551,12 @@
     function updatePeaceScore() {
       const expHousing = parseFloat(document.getElementById('expHousing')?.value) || 0;
       const expEssentials = parseFloat(document.getElementById('expEssentials')?.value) || 0;
-      const expTaxes = parseFloat(document.getElementById('expTaxes')?.value) || 0;
       const debtMetrics = getBadDebtTotals();
-      const essentialMonthly = expHousing + expEssentials + expTaxes + debtMetrics.totalMonthlyOutflow;
+      // If income goes to zero, income taxes drop to zero; exclude expTaxes from the survival runway
+      const survivalMonthly = expHousing + expEssentials + debtMetrics.totalMonthlyOutflow;
 
       const b1Initial = parseFloat(document.getElementById('b1Initial')?.value) || 0;
-      const runwayMonths = essentialMonthly > 0 ? (b1Initial / essentialMonthly) : 0;
+      const runwayMonths = survivalMonthly > 0 ? (b1Initial / survivalMonthly) : 0;
 
       const shieldB1Cash = document.getElementById('shieldB1Cash');
       const shieldMonthlySpend = document.getElementById('shieldMonthlySpend');
@@ -3503,7 +3564,7 @@
       const shieldRunwayBadge = document.getElementById('shieldRunwayBadge');
 
       if (shieldB1Cash) shieldB1Cash.textContent = formatCurrency(b1Initial);
-      if (shieldMonthlySpend) shieldMonthlySpend.textContent = formatCurrency(essentialMonthly);
+      if (shieldMonthlySpend) shieldMonthlySpend.textContent = formatCurrency(survivalMonthly);
       if (shieldRunwayMonths) shieldRunwayMonths.textContent = `${runwayMonths.toFixed(1)} Months`;
       if (shieldRunwayBadge) shieldRunwayBadge.textContent = `${runwayMonths.toFixed(0)} Mo Runway`;
 
