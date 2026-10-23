@@ -212,6 +212,7 @@
 
   <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
 
+    <!-- TAB 1: SUMMARY -->
     <section id="tab-summary" class="tab-pane space-y-6">
       <div class="print-tab-header border-b-2 border-brand-600 pb-3 mb-4">
         <div class="flex items-center justify-between">
@@ -360,7 +361,7 @@
             <span class="text-[11px] font-bold uppercase tracking-wider text-brand-200">Advisor Fiduciary Recommendation</span>
             <h4 class="text-base font-bold text-white mt-1">Integrated Fiduciary Alignment</h4>
             <p class="text-xs text-slate-300 max-w-2xl mt-1 leading-relaxed">
-              Maintain Bucket 0 for continuous skill and leadership leverage, safeguard 24 months of essential outflows in Bucket 1 cash and T-bills, and coordinate tax placement across Roth and tax-deferred accounts.
+              Maintain Bucket 0 for continuous skill and leadership leverage, safeguard essential survival outflows in Bucket 1 cash and T-bills, and coordinate tax placement across Roth and tax-deferred accounts.
             </p>
           </div>
           <div class="shrink-0 flex items-center space-x-3">
@@ -373,6 +374,7 @@
 
     </section>
 
+    <!-- TAB 2: INCOME -->
     <section id="tab-income" class="tab-pane hidden space-y-6">
       <div class="print-tab-header border-b-2 border-emerald-600 pb-3 mb-4">
         <div class="flex items-center justify-between">
@@ -414,7 +416,7 @@
             <p id="incomeBlendedGrowth" class="text-base font-bold text-brand-600">0.0% / yr</p>
           </div>
           <div>
-            <p class="text-xs text-slate-500">Annual Outflows (Expenses + Debt Service)</p>
+            <p class="text-xs text-slate-500">Annual Living Expenses & Tax</p>
             <p id="incomeTotalExpensesDisplay" class="text-base font-bold text-slate-700">$0</p>
           </div>
           <div>
@@ -428,13 +430,42 @@
 
       </div>
 
+      <!-- BAD DEBT ERADICATION SECTION -->
+      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-rose-200 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-rose-100 pb-3">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="credit-card" class="w-4 h-4 text-rose-600"></i>
+              <span>Bad Debt Eradication & Payoff Engine</span>
+            </h3>
+            <p class="text-xs text-slate-500">Calculate required monthly cash outflows to systematically retire high-interest debt within your desired timeframe.</p>
+          </div>
+          <button type="button" onclick="addBadDebtItem()" class="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded-xl transition shadow-2xs">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>Add Debt Item</span>
+          </button>
+        </div>
+
+        <div id="badDebtItemsList" class="space-y-3"></div>
+
+        <div class="p-3 bg-rose-50/70 rounded-xl border border-rose-200/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+          <div class="flex items-center space-x-2 text-rose-900">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+            <span>Total Bad Debt Balance: <strong id="badDebtTotalBalance">$0</strong></span>
+          </div>
+          <div class="flex items-center space-x-2 text-rose-900">
+            <span>Combined Required Monthly Outflow: <strong id="badDebtTotalMonthlyPmt" class="text-rose-700 text-sm">$0 / mo</strong></span>
+          </div>
+        </div>
+      </div>
+
       <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
             <i data-lucide="shopping-bag" class="w-4 h-4 text-slate-600"></i>
             <span>Fixed & Discretionary Lifestyle Outflows</span>
           </h3>
-          <span class="text-xs text-slate-400">Monthly Living Baseline</span>
+          <span class="text-xs text-slate-400">Monthly Basis</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-xs">
@@ -497,65 +528,12 @@
 
         <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2 text-xs">
           <div class="flex items-center space-x-2">
-            <span class="text-slate-500 font-medium">Core Living & Taxes Subtotal:</span>
-            <span id="expLivingMonthlySubtotal" class="font-bold text-slate-800">$14,500</span>
+            <span class="text-slate-500 font-medium">Mandatory Monthly (Housing + Essentials + Taxes + Debt):</span>
+            <span id="expMandatoryMonthly" class="font-bold text-slate-800">$13,446</span>
           </div>
-          <div class="flex items-center space-x-2 text-slate-500 text-[11px]">
-            <span>(Mandatory Housing + Essentials + Taxes: <strong id="expMandatoryMonthly" class="text-slate-700">$12,700</strong>)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- BAD DEBT ERADICATION & OUTFLOW ACCELERATOR -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-2 border-rose-200 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center font-bold">
-                <i data-lucide="flame" class="w-4 h-4"></i>
-              </span>
-              <h3 class="text-sm sm:text-base font-bold text-slate-900">Bad Debt Eradication & Payoff Engine</h3>
-            </div>
-            <p class="text-xs text-slate-500 mt-1">
-              Model non-mortgage liabilities (high-interest credit cards, personal loans, medical debt, high-rate auto notes). Enter your total balance, annual interest rate, and targeted payoff timeline to calculate the required monthly debt service outflow.
-            </p>
-          </div>
-          <button onclick="addBadDebtItem()" class="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs font-semibold rounded-xl shadow-2xs transition shrink-0 self-start sm:self-auto">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            <span>Add Debt Item</span>
-          </button>
-        </div>
-
-        <div id="badDebtItemsList" class="space-y-3"></div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3.5 bg-rose-50/70 border border-rose-200/90 rounded-xl text-center text-xs">
-          <div>
-            <span class="text-rose-900/70 block font-medium">Total Bad Debt Principal</span>
-            <span id="debtTotalPrincipalDisplay" class="font-extrabold text-base text-rose-900">$0</span>
-          </div>
-          <div>
-            <span class="text-rose-900/70 block font-medium">Blended APR</span>
-            <span id="debtBlendedAprDisplay" class="font-extrabold text-base text-rose-900">0.0%</span>
-          </div>
-          <div>
-            <span class="text-rose-900/70 block font-medium">Total Interest to Pay</span>
-            <span id="debtTotalInterestDisplay" class="font-extrabold text-base text-rose-800">$0</span>
-          </div>
-          <div>
-            <span class="text-rose-900/70 block font-medium">Required Monthly Outflow</span>
-            <span id="debtTotalMonthlyDisplay" class="font-extrabold text-base text-rose-700">$0 / mo</span>
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2 text-xs">
-          <div class="flex items-center space-x-2">
-            <span class="text-slate-500 font-medium">Total Outflows (Living + Bad Debt Payoff):</span>
-            <span id="expTotalMonthly" class="text-base font-bold text-slate-900">$14,500</span>
-            <span class="text-slate-400">/ mo</span>
-          </div>
-          <div class="flex items-center space-x-2 text-[11px] text-slate-500">
-            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
-            <span>Debt service is dynamically deducted from cash flow surplus</span>
+          <div class="flex items-center space-x-2 text-sm font-bold">
+            <span class="text-slate-800">Total Monthly Outflows:</span>
+            <span id="expTotalMonthly" class="text-slate-900">$15,246</span>
           </div>
         </div>
       </div>
@@ -565,7 +543,7 @@
           <i data-lucide="bar-chart-3" class="w-4 h-4 text-brand-600"></i>
           <span>10-Year Income vs. Outflow Escalation Projection</span>
         </h3>
-        <p class="text-xs text-slate-500 mb-4">Simulating individual stream inflation vs baseline living cost inflation and debt amortization</p>
+        <p class="text-xs text-slate-500 mb-4">Simulating individual stream inflation vs baseline living cost inflation and bad debt amortization</p>
         <div class="relative w-full h-64">
           <canvas id="incomeComparisonChart"></canvas>
         </div>
@@ -573,6 +551,7 @@
 
     </section>
 
+    <!-- TAB 3: INVESTMENTS -->
     <section id="tab-investments" class="tab-pane hidden space-y-6">
       <div class="print-tab-header border-b-2 border-brand-600 pb-3 mb-4">
         <div class="flex items-center justify-between">
@@ -595,7 +574,7 @@
               <span>Multi-Bucket Wealth Engine (Bucket 0, 1, 2, and 3)</span>
             </h2>
             <p class="text-xs text-slate-500 max-w-3xl mt-0.5">
-              Including <strong>Bucket 0: Investment Back Into Yourself</strong> (Human Capital, Mastery & Health), <strong>Bucket 1: 0–5 Years</strong> (Liquidity & Stability), and both <strong>Bucket 2 & Bucket 3: 5+ Years (Equities & Securities)</strong>. Modify holdings, notes, return projections, and phase-shifting transitions.
+              Including <strong>Bucket 0: Investment Back Into Yourself</strong>, <strong>Bucket 1: 0–5 Years</strong> (Liquidity & Stability), and both <strong>Bucket 2 & Bucket 3: 5+ Years (Equities & Securities)</strong> calculated over 20-year horizons.
             </p>
           </div>
           <div class="flex items-center space-x-2 shrink-0">
@@ -624,14 +603,11 @@
             <p id="investRemainingMoDisplay" class="text-[11px] text-slate-500 font-medium">$0 / mo remaining</p>
           </div>
         </div>
-        <p class="text-[11px] text-slate-400 mt-2.5 text-center md:text-left flex items-center justify-center md:justify-start">
-          <i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-brand-600 shrink-0"></i>
-          <span>Positive inflows (contributions) to buckets reduce remaining available capacity. Outflows (drawdowns) increase it.</span>
-        </p>
       </div>
 
       <div class="grid grid-cols-1 xl:grid-cols-4 md:grid-cols-2 gap-6">
 
+        <!-- BUCKET 0 -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border-2 border-indigo-500/50 flex flex-col justify-between relative overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -z-0 pointer-events-none"></div>
 
@@ -728,6 +704,7 @@
           </div>
         </div>
 
+        <!-- BUCKET 1 -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border-2 border-emerald-500/50 flex flex-col justify-between relative overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -z-0 pointer-events-none"></div>
 
@@ -748,7 +725,7 @@
               <input type="text" id="b1InvestedIn" value="High-Yield Savings, 3-6mo T-Bills, Short Treasury ETFs (SGOV, BIL), CD Ladders" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 font-medium text-slate-800 text-xs focus:ring-1 focus:ring-emerald-500 focus:bg-white">
 
               <label class="font-semibold text-slate-700 block mt-2">Advisor Comments & Thesis:</label>
-              <textarea id="b1Comments" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-700 text-xs focus:ring-1 focus:ring-emerald-500 focus:bg-white" placeholder="Investment thesis...">Shields 2-3 years of living outflows from sequence of returns risk; completely immune to market downturns.</textarea>
+              <textarea id="b1Comments" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-700 text-xs focus:ring-1 focus:ring-emerald-500 focus:bg-white" placeholder="Investment thesis...">Shields living outflows from sequence of returns risk; completely immune to market downturns.</textarea>
             </div>
 
             <div class="space-y-3 text-xs pt-1">
@@ -826,9 +803,6 @@
                     <span>Add Item</span>
                   </button>
                 </div>
-                <p class="text-[10px] text-slate-500 leading-tight">
-                  Planned lump-sum capital needs subtracted directly from Bucket 1 in designated future years.
-                </p>
                 <div id="bigTicketItemsList" class="space-y-1.5 max-h-36 overflow-y-auto pr-0.5"></div>
                 <div class="pt-1.5 border-t border-emerald-200/70 flex justify-between items-center text-[10px]">
                   <span class="text-slate-600 font-medium">Total Lump Outflows:</span>
@@ -845,6 +819,7 @@
           </div>
         </div>
 
+        <!-- BUCKET 2 -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border-2 border-amber-500/50 flex flex-col justify-between relative overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-amber-50 rounded-bl-full -z-0 pointer-events-none"></div>
 
@@ -941,6 +916,7 @@
           </div>
         </div>
 
+        <!-- BUCKET 3 -->
         <div class="bg-white rounded-2xl p-5 shadow-sm border-2 border-brand-500/50 flex flex-col justify-between relative overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -z-0 pointer-events-none"></div>
 
@@ -1078,6 +1054,7 @@
 
     </section>
 
+    <!-- TAB 4: EFFICIENCY -->
     <section id="tab-efficiency" class="tab-pane hidden space-y-6">
       <div class="print-tab-header border-b-2 border-indigo-600 pb-3 mb-4">
         <div class="flex items-center justify-between">
@@ -1100,7 +1077,7 @@
               <span>Account Efficiency & Asset Location Architect</span>
             </h2>
             <p class="text-xs text-slate-500 max-w-3xl mt-0.5">
-              Distribute total wealth from your investment buckets into optimal tax vehicles: <strong>Tax-Free (Roth, HSA, 529)</strong>, <strong>Tax-Deferred (Traditional 401(k), IRA, SEP)</strong>, and <strong>Taxable Brokerage</strong>.
+              100/100 if at least 70% of money is in tax-deferred or tax-free vehicles. Drops 5 points for every 10% decline below 70%. Taxable accounts must maintain low turnover (&lt;25%) to avoid a 10-point drag.
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
@@ -1125,12 +1102,12 @@
             <span id="effTotalAllocated" class="text-base font-bold text-brand-600">$0</span>
           </div>
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
-            <span class="text-[11px] text-slate-500 block font-medium">Reconciliation Variance</span>
-            <span id="effVariance" class="text-base font-bold text-emerald-600">$0 (Balanced)</span>
+            <span class="text-[11px] text-slate-500 block font-medium">Tax-Sheltered Ratio</span>
+            <span id="effShelteredRatio" class="text-base font-bold text-emerald-600">0%</span>
           </div>
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
             <span class="text-[11px] text-slate-500 block font-medium">Tax Location Score</span>
-            <span id="effTaxScore" class="text-base font-bold text-indigo-600">92/100 (Superior)</span>
+            <span id="effTaxScore" class="text-base font-bold text-indigo-600">100/100 (Optimal)</span>
           </div>
         </div>
       </div>
@@ -1178,27 +1155,23 @@
               </div>
             </div>
 
-            <!-- Taxable Turnover Efficiency Setting -->
-            <div class="pt-3 border-t border-slate-100">
-              <label class="flex items-start space-x-2.5 p-2 rounded-xl bg-slate-50 border border-slate-200/90 cursor-pointer hover:bg-slate-100 transition">
-                <input type="checkbox" id="chkLowTurnover" onchange="recalcAll()" checked class="mt-0.5 rounded text-indigo-600 focus:ring-0 w-4 h-4">
-                <div class="text-xs">
-                  <span class="font-bold text-slate-800 block">Taxable Brokerage: Low Turnover (&lt;25%)</span>
-                  <span class="text-slate-500 text-[11px] leading-tight block">Avoids realizing unnecessary short/long-term capital gains distributions (-10 pts if unchecked).</span>
-                </div>
-              </label>
+            <div id="taxableTurnoverAuditBanner" class="p-2.5 rounded-xl text-[11px] flex items-center justify-between border bg-emerald-50 border-emerald-200 text-emerald-800">
+              <span class="font-semibold flex items-center">
+                <i data-lucide="check" class="w-3.5 h-3.5 mr-1 text-emerald-600"></i>
+                <span>Taxable Turnover Audit:</span>
+              </span>
+              <span id="taxableTurnoverAuditText" class="font-bold">Low Turnover (&lt;25%) Compliant</span>
             </div>
           </div>
 
           <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-3 text-xs">
             <h4 class="font-bold text-slate-900 flex items-center space-x-1.5 text-xs">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-              <span>Asset Location Rules of Thumb</span>
+              <span>Asset Location Rules</span>
             </h4>
             <div class="p-2.5 bg-slate-50 rounded-xl space-y-2 text-slate-600 text-[11px] leading-relaxed">
-              <p><strong>Bucket 3 in Roth:</strong> Place highest-growth equities in Roth accounts so massive capital expansion compounds completely free of tax forever.</p>
-              <p><strong>Bucket 2 in Traditional:</strong> House high-yield dividend funds and taxable bonds inside 401(k)/IRAs to shelter recurring distributions from annual ordinary tax.</p>
-              <p><strong>Bucket 1 in Taxable/Cash:</strong> Keep liquidity in high-yield cash equivalents and municipal funds in taxable accounts with low capital gains impact.</p>
+              <p><strong>Sheltered Target (70%+):</strong> Keeping at least 70% of assets in Tax-Deferred & Tax-Free accounts shields the bulk of compounding from continuous tax drag.</p>
+              <p><strong>Taxable Discipline:</strong> In taxable accounts, passive index funds or low-turnover strategies (&lt;25%) ensure capital gains distributions do not penalize annual returns.</p>
             </div>
           </div>
         </div>
@@ -1207,6 +1180,7 @@
 
     </section>
 
+    <!-- TAB 5: PEACE OF MIND -->
     <section id="tab-peace" class="tab-pane hidden space-y-6">
       <div class="print-tab-header border-b-2 border-indigo-900 pb-3 mb-4">
         <div class="flex items-center justify-between">
@@ -1230,17 +1204,18 @@
             </div>
             <h2 class="text-xl sm:text-2xl font-bold">The "Sleep Better At Night" Protocol</h2>
             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              True wealth management extends far beyond asset growth. It ensures your family, business, and health are unconditionally bulletproof against legal shocks, premature death, bear markets, and disability.
+              Every month of survival runway provides 12 points, plus up to 24 points across 8 risk governance items (3 pts each).
             </p>
           </div>
 
-          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 text-center shrink-0 flex flex-col items-center justify-center min-w-[180px]">
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 text-center shrink-0 flex flex-col items-center justify-center min-w-[200px]">
             <span class="text-xs text-indigo-200 uppercase tracking-wider font-semibold">Peace-Of-Mind Index</span>
             <div class="flex items-baseline justify-center space-x-1 my-1">
               <span id="peaceScoreLarge" class="text-4xl font-extrabold text-white">85</span>
               <span class="text-sm font-semibold text-slate-300">/100</span>
             </div>
             <span id="peaceScoreStatusText" class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 border border-emerald-400/30">Well Protected</span>
+            <span id="peaceScoreBreakdown" class="text-[10px] text-slate-300 font-mono mt-1">Runway: 61 pts | Checklist: 24 pts</span>
           </div>
         </div>
       </div>
@@ -1257,7 +1232,7 @@
           </div>
 
           <p class="text-xs text-slate-600 leading-relaxed">
-            By maintaining a dedicated 0-5 year cash & stable buffer in Bucket 1, clients never have to liquidate equities at depressed prices during a severe market pullback. Income taxes are excluded as earned tax burdens fall to zero if earned inflows cease.
+            By maintaining dedicated cash & stable reserves in Bucket 1, clients never have to liquidate equities at depressed prices. (If income ceases, earned income tax drops to $0, so runway is calculated on essential survival outflows: Housing, Essentials, and Bad Debt).
           </p>
 
           <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-100 space-y-2 text-xs">
@@ -1266,7 +1241,7 @@
               <span id="shieldB1Cash" class="font-bold text-slate-800">$0</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-slate-500">Essential Survival Outflows (Housing + Essentials + Bad Debt):</span>
+              <span class="text-slate-500">Essential Survival Outflow (Housing + Essentials + Debt):</span>
               <span id="shieldMonthlySpend" class="font-bold text-slate-800">$0</span>
             </div>
             <div class="flex justify-between pt-2 border-t border-slate-200 font-semibold">
@@ -1282,7 +1257,7 @@
               <i data-lucide="umbrella" class="w-4 h-4 text-brand-600"></i>
               <span>2. Catastrophic Risk Defense</span>
             </h3>
-            <span class="text-xs text-slate-400">Audit Status</span>
+            <span class="text-xs text-slate-400">3 pts each</span>
           </div>
 
           <p class="text-xs text-slate-600">
@@ -1330,7 +1305,7 @@
               <i data-lucide="file-check" class="w-4 h-4 text-indigo-600"></i>
               <span>3. Estate & Legacy Governance</span>
             </h3>
-            <span class="text-xs text-slate-400">Legal Audit</span>
+            <span class="text-xs text-slate-400">3 pts each</span>
           </div>
 
           <p class="text-xs text-slate-600">
@@ -1401,6 +1376,7 @@
 
     </section>
 
+    <!-- TAB 6: TRUE WEALTH -->
     <section id="tab-truewealth" class="tab-pane hidden space-y-6">
       <div class="print-tab-header border-b-2 border-teal-600 pb-3 mb-4">
         <div class="flex items-center justify-between">
@@ -1586,8 +1562,7 @@
     ];
 
     let badDebtItems = [
-      { id: 1, name: "High-Interest Credit Card Portfolio", principal: 28000, rate: 21.9, payoffMonths: 24, note: "Variable Revolving Debt" },
-      { id: 2, name: "Unsecured Personal / Consolidation Loan", principal: 15000, rate: 11.5, payoffMonths: 36, note: "Fixed Term Debt" }
+      { id: 1, name: "Credit Card / High Interest", balance: 12000, apr: 22.5, months: 18 }
     ];
 
     let bigTicketItems = [
@@ -1596,10 +1571,10 @@
     ];
 
     let accountsList = [
-      { id: 1, name: "Roth 401(k) / Roth IRA", type: "tax-free", balance: 600000, bucket: "Bucket 3 (5+ Yrs Equities & Securities)" },
-      { id: 2, name: "Traditional 401(k) / IRA", type: "tax-deferred", balance: 350000, bucket: "Bucket 2 (5+ Yrs Equities & Securities)" },
-      { id: 3, name: "Taxable Individual / Joint Brokerage", type: "taxable", balance: 120000, bucket: "Bucket 1 (0-5 Yrs)" },
-      { id: 4, name: "Health Savings Account (HSA)", type: "tax-free", balance: 150000, bucket: "Bucket 3 (5+ Yrs Equities & Securities)" }
+      { id: 1, name: "Roth 401(k) / Roth IRA", type: "tax-free", balance: 600000, bucket: "Bucket 3 (5+ Yrs Equities & Securities)", lowTurnover: true },
+      { id: 2, name: "Traditional 401(k) / IRA", type: "tax-deferred", balance: 350000, bucket: "Bucket 2 (5+ Yrs Equities & Securities)", lowTurnover: true },
+      { id: 3, name: "Taxable Individual / Joint Brokerage", type: "taxable", balance: 120000, bucket: "Bucket 1 (0-5 Yrs)", lowTurnover: true },
+      { id: 4, name: "Health Savings Account (HSA)", type: "tax-free", balance: 150000, bucket: "Bucket 3 (5+ Yrs Equities & Securities)", lowTurnover: true }
     ];
 
     let summaryWealthChartInstance = null;
@@ -1667,19 +1642,146 @@
       }
     ];
 
-    // Standard Amortization Formula: P * (r * (1 + r)^n) / ((1 + r)^n - 1)
-    function calculateDebtMonthlyPayment(principal, annualRatePct, months) {
-      if (principal <= 0 || months <= 0) return 0;
-      const r = (annualRatePct / 100) / 12;
-      if (r <= 0) return principal / months;
-      const factor = Math.pow(1 + r, months);
-      return principal * (r * factor) / (factor - 1);
+    function getBadDebtTotals() {
+      let totalBalance = 0;
+      let totalMonthlyOutflow = 0;
+      let maxPayoffMonths = 0;
+
+      if (Array.isArray(badDebtItems)) {
+        badDebtItems.forEach(item => {
+          const bal = parseFloat(item.balance) || 0;
+          const apr = parseFloat(item.apr) || 0;
+          const n = parseInt(item.months) || 1;
+
+          totalBalance += bal;
+          if (n > maxPayoffMonths) maxPayoffMonths = n;
+
+          if (bal > 0 && n > 0) {
+            const r = (apr / 100) / 12;
+            let pmt = 0;
+            if (r > 0) {
+              pmt = bal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            } else {
+              pmt = bal / n;
+            }
+            totalMonthlyOutflow += pmt;
+          }
+        });
+      }
+
+      return {
+        totalBalance,
+        totalMonthlyOutflow: Math.round(totalMonthlyOutflow),
+        maxPayoffMonths
+      };
     }
 
-    function calculateDebtTotalInterest(principal, annualRatePct, months) {
-      if (principal <= 0 || months <= 0) return 0;
-      const pmt = calculateDebtMonthlyPayment(principal, annualRatePct, months);
-      return Math.max(0, (pmt * months) - principal);
+    function renderBadDebtItems() {
+      const container = document.getElementById('badDebtItemsList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      badDebtItems.forEach((debt, idx) => {
+        const bal = parseFloat(debt.balance) || 0;
+        const apr = parseFloat(debt.apr) || 0;
+        const n = parseInt(debt.months) || 1;
+        const r = (apr / 100) / 12;
+        let pmt = 0;
+        if (bal > 0 && n > 0) {
+          pmt = r > 0 ? (bal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)) : (bal / n);
+        }
+        const totalPaid = pmt * n;
+        const totalInterest = Math.max(0, totalPaid - bal);
+
+        const card = document.createElement('div');
+        card.className = "p-3.5 bg-slate-50 rounded-xl border border-rose-200/80 text-xs space-y-2.5 transition";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="flex items-center space-x-2 flex-1">
+              <span class="w-6 h-6 rounded-md bg-rose-100 text-rose-800 font-bold flex items-center justify-center text-[11px] shrink-0">${idx + 1}</span>
+              <input type="text" value="${debt.name}" oninput="updateBadDebtField(${debt.id}, 'name', this.value)" class="font-bold text-slate-800 bg-transparent border-b border-dashed border-slate-300 focus:outline-none focus:border-rose-500 pb-0.5 text-xs sm:text-sm w-full max-w-sm" placeholder="Debt description">
+            </div>
+            <button type="button" onclick="removeBadDebtItem(${debt.id})" class="text-rose-500 hover:text-rose-700 font-semibold text-xs inline-flex items-center shrink-0 self-end sm:self-auto">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5 mr-1"></i> Remove
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-500 text-[11px] font-medium">Total Balance</span>
+                <div class="flex items-center space-x-1">
+                  <span class="text-slate-400">$</span>
+                  <input type="number" step="500" min="0" value="${bal}" oninput="updateBadDebtField(${debt.id}, 'balance', parseFloat(this.value) || 0)" class="w-24 text-right font-bold text-slate-800 bg-white border border-slate-200 rounded p-1 text-xs">
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-500 text-[11px] font-medium">Interest Rate (APR)</span>
+                <div class="flex items-center space-x-1">
+                  <input type="number" step="0.1" min="0" max="60" value="${apr}" oninput="updateBadDebtField(${debt.id}, 'apr', parseFloat(this.value) || 0)" class="w-16 text-right font-bold text-slate-800 bg-white border border-slate-200 rounded p-1 text-xs">
+                  <span class="text-slate-500">%</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-500 text-[11px] font-medium">Target Payoff</span>
+                <div class="flex items-center space-x-1">
+                  <input type="number" min="1" max="360" value="${n}" oninput="updateBadDebtField(${debt.id}, 'months', parseInt(this.value) || 1)" class="w-16 text-center font-bold text-rose-700 bg-white border border-slate-200 rounded p-1 text-xs">
+                  <span class="text-slate-500">mo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-rose-100 flex flex-wrap items-center justify-between text-[11px] text-slate-600 gap-1 bg-white/70 p-2 rounded-lg">
+            <div>Required Monthly Payment: <span class="font-extrabold text-rose-700">${formatCurrency(Math.round(pmt))}/mo</span></div>
+            <div>Total Interest: <span class="font-bold text-slate-700">${formatCurrency(Math.round(totalInterest))}</span></div>
+            <div>Payoff Term: <span class="font-bold text-slate-800">${(n / 12).toFixed(1)} yrs (${n} mo)</span></div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      const totals = getBadDebtTotals();
+      const balEl = document.getElementById('badDebtTotalBalance');
+      const pmtEl = document.getElementById('badDebtTotalMonthlyPmt');
+      if (balEl) balEl.textContent = formatCurrency(totals.totalBalance);
+      if (pmtEl) pmtEl.textContent = `${formatCurrency(totals.totalMonthlyOutflow)} / mo`;
+
+      lucide.createIcons();
+    }
+
+    function addBadDebtItem() {
+      const nextId = badDebtItems.length > 0 ? Math.max(...badDebtItems.map(d => d.id)) + 1 : 1;
+      badDebtItems.push({
+        id: nextId,
+        name: `Bad Debt Note #${nextId}`,
+        balance: 10000,
+        apr: 18.0,
+        months: 24
+      });
+      renderBadDebtItems();
+      recalcAll();
+    }
+
+    function removeBadDebtItem(id) {
+      badDebtItems = badDebtItems.filter(d => d.id !== id);
+      renderBadDebtItems();
+      recalcAll();
+    }
+
+    function updateBadDebtField(id, field, value) {
+      const debt = badDebtItems.find(d => d.id === id);
+      if (debt) {
+        debt[field] = value;
+        renderBadDebtItems();
+        recalcAll();
+      }
     }
 
     window.onload = function() {
@@ -1893,138 +1995,6 @@
       recalcAll();
     }
 
-    // BAD DEBT ENGINE FUNCTIONS
-    function renderBadDebtItems() {
-      const container = document.getElementById('badDebtItemsList');
-      if (!container) return;
-      container.innerHTML = '';
-
-      badDebtItems.forEach((item, idx) => {
-        const p = parseFloat(item.principal) || 0;
-        const r = parseFloat(item.rate) || 0;
-        const m = parseInt(item.payoffMonths) || 12;
-        const moPmt = calculateDebtMonthlyPayment(p, r, m);
-        const totalInt = calculateDebtTotalInterest(p, r, m);
-
-        const card = document.createElement('div');
-        card.className = "p-4 rounded-xl bg-rose-50/40 border border-rose-200 text-xs space-y-3 transition-all";
-        card.innerHTML = `
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-rose-100 pb-2">
-            <div class="flex items-center space-x-2 flex-1">
-              <span class="w-6 h-6 rounded-md bg-rose-200 text-rose-800 font-bold flex items-center justify-center text-[11px] shrink-0">${idx + 1}</span>
-              <input type="text" value="${item.name}" oninput="updateBadDebtField(${item.id}, 'name', this.value)" class="font-bold text-slate-800 bg-transparent border-b border-dashed border-rose-300 focus:outline-none focus:border-rose-600 pb-0.5 text-xs sm:text-sm w-full max-w-sm" placeholder="Debt description">
-            </div>
-            <div class="flex items-center space-x-3 shrink-0">
-              <div class="text-right">
-                <span class="text-[10px] text-slate-500 uppercase font-semibold block">Required Outflow</span>
-                <span class="font-extrabold text-sm text-rose-700">${formatCurrency(moPmt)} / mo</span>
-              </div>
-              <button onclick="removeBadDebtItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1 rounded transition" title="Remove Liability">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-            <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="text-slate-600 font-medium">Total Debt Principal</label>
-                <div class="flex items-center space-x-1">
-                  <span class="text-slate-400">$</span>
-                  <input type="number" step="500" min="0" value="${p}" oninput="updateBadDebtField(${item.id}, 'principal', parseFloat(this.value) || 0)" class="w-24 text-right font-bold text-slate-800 bg-white border border-slate-200 rounded p-1">
-                </div>
-              </div>
-              <input type="range" min="0" max="${Math.max(150000, p * 1.3)}" step="500" value="${p}" oninput="updateBadDebtField(${item.id}, 'principal', parseFloat(this.value) || 0)" class="w-full accent-rose-600">
-            </div>
-
-            <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="text-slate-600 font-medium">Annual Interest Rate (APR)</label>
-                <div class="flex items-center space-x-1">
-                  <input type="number" step="0.1" min="0" max="45" value="${r}" oninput="updateBadDebtField(${item.id}, 'rate', parseFloat(this.value) || 0)" class="w-16 text-right font-bold text-rose-700 bg-white border border-slate-200 rounded p-1">
-                  <span class="text-slate-500">%</span>
-                </div>
-              </div>
-              <input type="range" min="0" max="36" step="0.25" value="${r}" oninput="updateBadDebtField(${item.id}, 'rate', parseFloat(this.value) || 0)" class="w-full accent-rose-600">
-            </div>
-
-            <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="text-slate-600 font-medium">Target Payoff Horizon</label>
-                <div class="flex items-center space-x-1">
-                  <input type="number" step="1" min="1" max="120" value="${m}" oninput="updateBadDebtField(${item.id}, 'payoffMonths', parseInt(this.value) || 1)" class="w-16 text-right font-bold text-slate-800 bg-white border border-slate-200 rounded p-1">
-                  <span class="text-slate-500 font-semibold">mo</span>
-                </div>
-              </div>
-              <input type="range" min="3" max="84" step="1" value="${m}" oninput="updateBadDebtField(${item.id}, 'payoffMonths', parseInt(this.value) || 1)" class="w-full accent-rose-600">
-              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                <span>(${(m / 12).toFixed(1)} years)</span>
-                <span>Est. Total Interest: <strong class="text-slate-600">${formatCurrency(totalInt)}</strong></span>
-              </div>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-      lucide.createIcons();
-    }
-
-    function addBadDebtItem() {
-      const nextId = badDebtItems.length > 0 ? Math.max(...badDebtItems.map(d => d.id)) + 1 : 1;
-      badDebtItems.push({
-        id: nextId,
-        name: `Bad Debt Liability #${nextId}`,
-        principal: 10000,
-        rate: 18.0,
-        payoffMonths: 24,
-        note: "Revolving or unsecured note"
-      });
-      renderBadDebtItems();
-      recalcAll();
-    }
-
-    function removeBadDebtItem(id) {
-      badDebtItems = badDebtItems.filter(d => d.id !== id);
-      renderBadDebtItems();
-      recalcAll();
-    }
-
-    function updateBadDebtField(id, field, value) {
-      const item = badDebtItems.find(d => d.id === id);
-      if (!item) return;
-      item[field] = value;
-      renderBadDebtItems();
-      recalcAll();
-    }
-
-    function getBadDebtTotals() {
-      let totalPrincipal = 0;
-      let totalMonthlyOutflow = 0;
-      let totalInterest = 0;
-      let weightedRateSum = 0;
-
-      badDebtItems.forEach(d => {
-        const p = parseFloat(d.principal) || 0;
-        const r = parseFloat(d.rate) || 0;
-        const m = parseInt(d.payoffMonths) || 12;
-        const moPmt = calculateDebtMonthlyPayment(p, r, m);
-        const intPmt = calculateDebtTotalInterest(p, r, m);
-
-        totalPrincipal += p;
-        totalMonthlyOutflow += moPmt;
-        totalInterest += intPmt;
-        weightedRateSum += p * r;
-      });
-
-      const blendedRate = totalPrincipal > 0 ? (weightedRateSum / totalPrincipal) : 0;
-      return {
-        totalPrincipal,
-        totalMonthlyOutflow,
-        totalInterest,
-        blendedRate
-      };
-    }
-
     function renderBigTicketItems() {
       const container = document.getElementById('bigTicketItemsList');
       if (!container) return;
@@ -2094,28 +2064,20 @@
     }
 
     function recalcAll() {
-      const expHousing = parseFloat(document.getElementById('expHousing').value) || 0;
-      const expEssentials = parseFloat(document.getElementById('expEssentials').value) || 0;
-      const expLifestyle = parseFloat(document.getElementById('expLifestyle').value) || 0;
-      const expTaxes = parseFloat(document.getElementById('expTaxes').value) || 0;
-      
-      const debtMetrics = getBadDebtTotals();
-      const monthlyDebtPayment = debtMetrics.totalMonthlyOutflow;
+      const expHousing = parseFloat(document.getElementById('expHousing')?.value) || 0;
+      const expEssentials = parseFloat(document.getElementById('expEssentials')?.value) || 0;
+      const expLifestyle = parseFloat(document.getElementById('expLifestyle')?.value) || 0;
+      const expTaxes = parseFloat(document.getElementById('expTaxes')?.value) || 0;
 
-      const livingMonthlySubtotal = expHousing + expEssentials + expLifestyle + expTaxes;
-      const mandatoryMonthlyExpenses = expHousing + expEssentials + expTaxes + monthlyDebtPayment;
-      const totalMonthlyExpenses = livingMonthlySubtotal + monthlyDebtPayment;
+      const debtMetrics = getBadDebtTotals();
+      const badDebtMonthly = debtMetrics.totalMonthlyOutflow;
+
+      const mandatoryMonthlyExpenses = expHousing + expEssentials + expTaxes + badDebtMonthly;
+      const totalMonthlyExpenses = mandatoryMonthlyExpenses + expLifestyle;
       const totalAnnualExpenses = totalMonthlyExpenses * 12;
 
-      // Update Debt Displays
-      const debtTotalPrincipalDisplay = document.getElementById('debtTotalPrincipalDisplay');
-      const debtBlendedAprDisplay = document.getElementById('debtBlendedAprDisplay');
-      const debtTotalInterestDisplay = document.getElementById('debtTotalInterestDisplay');
-      const debtTotalMonthlyDisplay = document.getElementById('debtTotalMonthlyDisplay');
-      if (debtTotalPrincipalDisplay) debtTotalPrincipalDisplay.textContent = formatCurrency(debtMetrics.totalPrincipal);
-      if (debtBlendedAprDisplay) debtBlendedAprDisplay.textContent = debtMetrics.blendedRate.toFixed(1) + "%";
-      if (debtTotalInterestDisplay) debtTotalInterestDisplay.textContent = formatCurrency(debtMetrics.totalInterest);
-      if (debtTotalMonthlyDisplay) debtTotalMonthlyDisplay.textContent = `${formatCurrency(monthlyDebtPayment)} / mo`;
+      // Essential survival monthly outflows (excluding taxes because earned tax drops to 0 if income ceases)
+      const survivalMonthly = expHousing + expEssentials + badDebtMonthly;
 
       const expHousingRange = document.getElementById('expHousingRange');
       if (expHousingRange && document.activeElement !== expHousingRange) expHousingRange.value = expHousing;
@@ -2126,16 +2088,12 @@
       const expTaxesRange = document.getElementById('expTaxesRange');
       if (expTaxesRange && document.activeElement !== expTaxesRange) expTaxesRange.value = expTaxes;
 
-      const expLivingMonthlySubtotal = document.getElementById('expLivingMonthlySubtotal');
-      if (expLivingMonthlySubtotal) expLivingMonthlySubtotal.textContent = formatCurrency(livingMonthlySubtotal);
-
       const expMandatoryEl = document.getElementById('expMandatoryMonthly');
       if (expMandatoryEl) expMandatoryEl.textContent = formatCurrency(mandatoryMonthlyExpenses);
-      
       const expTotalMonthlyEl = document.getElementById('expTotalMonthly');
       if (expTotalMonthlyEl) expTotalMonthlyEl.textContent = formatCurrency(totalMonthlyExpenses);
-      
-      document.getElementById('incomeTotalExpensesDisplay').textContent = formatCurrency(totalAnnualExpenses);
+      const incTotalExpDisplay = document.getElementById('incomeTotalExpensesDisplay');
+      if (incTotalExpDisplay) incTotalExpDisplay.textContent = formatCurrency(totalAnnualExpenses);
 
       let grossAnnualIncome = 0;
       let weightedGrowthSum = 0;
@@ -2149,8 +2107,10 @@
       const annualSurplus = Math.max(0, grossAnnualIncome - totalAnnualExpenses);
       const annualRemaining = grossAnnualIncome - totalAnnualExpenses;
 
-      document.getElementById('incomeTotalGross').textContent = formatCurrency(grossAnnualIncome);
-      document.getElementById('stripAnnualIncome').textContent = formatCurrency(grossAnnualIncome);
+      const incTotalGross = document.getElementById('incomeTotalGross');
+      if (incTotalGross) incTotalGross.textContent = formatCurrency(grossAnnualIncome);
+      const stripInc = document.getElementById('stripAnnualIncome');
+      if (stripInc) stripInc.textContent = formatCurrency(grossAnnualIncome);
       
       const stripAnnualExpenses = document.getElementById('stripAnnualExpenses');
       if (stripAnnualExpenses) {
@@ -2164,43 +2124,45 @@
           : "font-semibold text-rose-600";
       }
 
-      document.getElementById('incomeBlendedGrowth').textContent = blendedGrowthRate.toFixed(1) + "% / yr";
-      document.getElementById('incomeSurplusDisplay').textContent = formatCurrency(annualSurplus);
+      const incBlendedGrowth = document.getElementById('incomeBlendedGrowth');
+      if (incBlendedGrowth) incBlendedGrowth.textContent = blendedGrowthRate.toFixed(1) + "% / yr";
+      const incSurplusDisplay = document.getElementById('incomeSurplusDisplay');
+      if (incSurplusDisplay) incSurplusDisplay.textContent = formatCurrency(annualSurplus);
 
       const b0 = {
-        initial: parseFloat(document.getElementById('b0Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b0Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b0Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b0TransitionYear').value) || 5,
-        p2Action: document.getElementById('b0Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b0Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b0Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b0Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b0Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b0TransitionYear')?.value) || 5,
+        p2Action: document.getElementById('b0Phase2Action')?.value || 'contribute',
+        p2Amount: parseFloat(document.getElementById('b0Phase2Amount')?.value) || 0
       };
 
       const b1 = {
-        initial: parseFloat(document.getElementById('b1Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b1Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b1Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b1TransitionYear').value) || 5,
-        p2Action: document.getElementById('b1Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b1Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b1Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b1Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b1Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b1TransitionYear')?.value) || 5,
+        p2Action: document.getElementById('b1Phase2Action')?.value || 'withdraw',
+        p2Amount: parseFloat(document.getElementById('b1Phase2Amount')?.value) || 0
       };
 
       const b2 = {
-        initial: parseFloat(document.getElementById('b2Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b2Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b2Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b2TransitionYear').value) || 10,
-        p2Action: document.getElementById('b2Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b2Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b2Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b2Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b2Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b2TransitionYear')?.value) || 10,
+        p2Action: document.getElementById('b2Phase2Action')?.value || 'withdraw',
+        p2Amount: parseFloat(document.getElementById('b2Phase2Amount')?.value) || 0
       };
 
       const b3 = {
-        initial: parseFloat(document.getElementById('b3Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b3Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b3Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b3TransitionYear').value) || 15,
-        p2Action: document.getElementById('b3Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b3Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b3Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b3Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b3Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b3TransitionYear')?.value) || 15,
+        p2Action: document.getElementById('b3Phase2Action')?.value || 'withdraw',
+        p2Amount: parseFloat(document.getElementById('b3Phase2Amount')?.value) || 0
       };
 
       const totalBucketMonthlyFlow = b0.monthly + b1.monthly + b2.monthly + b3.monthly;
@@ -2299,12 +2261,13 @@
       const longTermPortfolioToday = b2.initial + b3.initial;
       const totalAllCapital = b0.initial + b1.initial + b2.initial + b3.initial;
 
-      document.getElementById('stripTotalAssets').textContent = formatCurrency(totalPortfolioToday);
+      const stripTotalAssets = document.getElementById('stripTotalAssets');
+      if (stripTotalAssets) stripTotalAssets.textContent = formatCurrency(totalPortfolioToday);
       const stripLongTermEl = document.getElementById('stripLongTermAssets');
       if (stripLongTermEl) stripLongTermEl.textContent = formatCurrency(longTermPortfolioToday);
 
-      const essentialMonthly = mandatoryMonthlyExpenses;
-      const liquidMonths = essentialMonthly > 0 ? (b1.initial / essentialMonthly) : 0;
+      // Liquid cushion runway now exactly mirrors the Sleep Better At Night survival calculation
+      const liquidMonths = survivalMonthly > 0 ? (b1.initial / survivalMonthly) : 0;
       const stripLiquidEl = document.getElementById('stripLiquidCushion');
       if (stripLiquidEl) {
         stripLiquidEl.innerHTML = `${formatCurrency(b1.initial)} <span class="text-xs sm:text-sm font-semibold text-slate-500">/ ${liquidMonths.toFixed(1)} mo</span>`;
@@ -2315,23 +2278,32 @@
       const pct2 = totalAllCapital > 0 ? (b2.initial / totalAllCapital * 100).toFixed(0) : 0;
       const pct3 = totalAllCapital > 0 ? (b3.initial / totalAllCapital * 100).toFixed(0) : 0;
 
-      document.getElementById('summaryB0Val').textContent = `${formatCurrency(b0.initial)} (${pct0}%)`;
-      document.getElementById('summaryB1Val').textContent = `${formatCurrency(b1.initial)} (${pct1}%)`;
-      document.getElementById('summaryB2Val').textContent = `${formatCurrency(b2.initial)} (${pct2}%)`;
-      document.getElementById('summaryB3Val').textContent = `${formatCurrency(b3.initial)} (${pct3}%)`;
+      const sumB0 = document.getElementById('summaryB0Val');
+      if (sumB0) sumB0.textContent = `${formatCurrency(b0.initial)} (${pct0}%)`;
+      const sumB1 = document.getElementById('summaryB1Val');
+      if (sumB1) sumB1.textContent = `${formatCurrency(b1.initial)} (${pct1}%)`;
+      const sumB2 = document.getElementById('summaryB2Val');
+      if (sumB2) sumB2.textContent = `${formatCurrency(b2.initial)} (${pct2}%)`;
+      const sumB3 = document.getElementById('summaryB3Val');
+      if (sumB3) sumB3.textContent = `${formatCurrency(b3.initial)} (${pct3}%)`;
 
       const projection = runCompoundingSimulation(b0, b1, b2, b3, 30);
 
-      document.getElementById('proj5Year').textContent = formatCurrency(projection[4].total);
-      document.getElementById('proj10Year').textContent = formatCurrency(projection[9].total);
-      document.getElementById('proj25Year').textContent = formatCurrency(projection[24].total);
+      const proj5Year = document.getElementById('proj5Year');
+      if (proj5Year && projection[4]) proj5Year.textContent = formatCurrency(projection[4].total);
+      const proj10Year = document.getElementById('proj10Year');
+      if (proj10Year && projection[9]) proj10Year.textContent = formatCurrency(projection[9].total);
+      const proj25Year = document.getElementById('proj25Year');
+      if (proj25Year && projection[24]) proj25Year.textContent = formatCurrency(projection[24].total);
 
-      document.getElementById('b0FutureVal5').textContent = formatCurrency(projection[4].b0);
-      document.getElementById('b1FutureVal5').textContent = formatCurrency(projection[4].b1);
-      const b2FutureVal20El = document.getElementById('b2FutureVal20');
-      if (b2FutureVal20El) b2FutureVal20El.textContent = formatCurrency(projection[19].b2);
-      const b3FutureVal20El = document.getElementById('b3FutureVal20');
-      if (b3FutureVal20El) b3FutureVal20El.textContent = formatCurrency(projection[19].b3);
+      const b0F5 = document.getElementById('b0FutureVal5');
+      if (b0F5 && projection[4]) b0F5.textContent = formatCurrency(projection[4].b0);
+      const b1F5 = document.getElementById('b1FutureVal5');
+      if (b1F5 && projection[4]) b1F5.textContent = formatCurrency(projection[4].b1);
+      const b2F20 = document.getElementById('b2FutureVal20');
+      if (b2F20 && projection[19]) b2F20.textContent = formatCurrency(projection[19].b2);
+      const b3F20 = document.getElementById('b3FutureVal20');
+      if (b3F20 && projection[19]) b3F20.textContent = formatCurrency(projection[19].b3);
 
       if (currentActiveTab === 'investments') {
         renderLedgerTable(projection, currentTableYears);
@@ -2723,7 +2695,7 @@
 
     function serializeCurrentPlan() {
       return {
-        version: "2.2",
+        version: "2.3",
         savedAt: new Date().toISOString(),
         clientName: document.getElementById('clientNameInput')?.value || "Client",
         yearsToRetire: parseInt(document.getElementById('yearsToRetireInput')?.value) || 15,
@@ -2737,9 +2709,6 @@
         badDebtItems: badDebtItems,
         bigTicketItems: bigTicketItems,
         accountsList: accountsList,
-        efficiencySettings: {
-          lowTurnover: !!document.getElementById('chkLowTurnover')?.checked
-        },
         buckets: {
           b0: {
             investedIn: document.getElementById('b0InvestedIn')?.value || "",
@@ -2905,13 +2874,6 @@
         renderAccountsTable();
       }
 
-      if (plan.efficiencySettings) {
-        const chk = document.getElementById('chkLowTurnover');
-        if (chk && plan.efficiencySettings.lowTurnover !== undefined) {
-          chk.checked = !!plan.efficiencySettings.lowTurnover;
-        }
-      }
-
       if (plan.buckets) {
         const b0 = plan.buckets.b0;
         if (b0) {
@@ -3012,45 +2974,44 @@
       const dateStamp = getFormattedDateStamp();
 
       const b0 = {
-        initial: parseFloat(document.getElementById('b0Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b0Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b0Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b0TransitionYear').value) || 5,
-        p2Action: document.getElementById('b0Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b0Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b0Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b0Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b0Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b0TransitionYear')?.value) || 5,
+        p2Action: document.getElementById('b0Phase2Action')?.value || 'contribute',
+        p2Amount: parseFloat(document.getElementById('b0Phase2Amount')?.value) || 0
       };
       const b1 = {
-        initial: parseFloat(document.getElementById('b1Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b1Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b1Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b1TransitionYear').value) || 5,
-        p2Action: document.getElementById('b1Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b1Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b1Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b1Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b1Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b1TransitionYear')?.value) || 5,
+        p2Action: document.getElementById('b1Phase2Action')?.value || 'withdraw',
+        p2Amount: parseFloat(document.getElementById('b1Phase2Amount')?.value) || 0
       };
       const b2 = {
-        initial: parseFloat(document.getElementById('b2Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b2Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b2Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b2TransitionYear').value) || 10,
-        p2Action: document.getElementById('b2Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b2Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b2Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b2Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b2Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b2TransitionYear')?.value) || 10,
+        p2Action: document.getElementById('b2Phase2Action')?.value || 'withdraw',
+        p2Amount: parseFloat(document.getElementById('b2Phase2Amount')?.value) || 0
       };
       const b3 = {
-        initial: parseFloat(document.getElementById('b3Initial').value) || 0,
-        ret: (parseFloat(document.getElementById('b3Return').value) || 0) / 100,
-        monthly: parseFloat(document.getElementById('b3Monthly').value) || 0,
-        transYear: parseInt(document.getElementById('b3TransitionYear').value) || 15,
-        p2Action: document.getElementById('b3Phase2Action').value,
-        p2Amount: parseFloat(document.getElementById('b3Phase2Amount').value) || 0
+        initial: parseFloat(document.getElementById('b3Initial')?.value) || 0,
+        ret: (parseFloat(document.getElementById('b3Return')?.value) || 0) / 100,
+        monthly: parseFloat(document.getElementById('b3Monthly')?.value) || 0,
+        transYear: parseInt(document.getElementById('b3TransitionYear')?.value) || 15,
+        p2Action: document.getElementById('b3Phase2Action')?.value || 'withdraw',
+        p2Amount: parseFloat(document.getElementById('b3Phase2Amount')?.value) || 0
       };
 
       const projection = runCompoundingSimulation(b0, b1, b2, b3, 30);
 
-      const expHousing = parseFloat(document.getElementById('expHousing').value) || 0;
-      const expEssentials = parseFloat(document.getElementById('expEssentials').value) || 0;
-      const expLifestyle = parseFloat(document.getElementById('expLifestyle').value) || 0;
-      const expTaxes = parseFloat(document.getElementById('expTaxes').value) || 0;
-      
+      const expHousing = parseFloat(document.getElementById('expHousing')?.value) || 0;
+      const expEssentials = parseFloat(document.getElementById('expEssentials')?.value) || 0;
+      const expLifestyle = parseFloat(document.getElementById('expLifestyle')?.value) || 0;
+      const expTaxes = parseFloat(document.getElementById('expTaxes')?.value) || 0;
       const debtMetrics = getBadDebtTotals();
       const mandatoryMonthly = expHousing + expEssentials + expTaxes + debtMetrics.totalMonthlyOutflow;
       const totalMonthly = mandatoryMonthly + expLifestyle;
@@ -3067,11 +3028,8 @@
       const totalPortfolioToday = b1.initial + b2.initial + b3.initial;
       const longTermPortfolioToday = b2.initial + b3.initial;
       const totalAllCapital = b0.initial + totalPortfolioToday;
-      const liquidMonths = mandatoryMonthly > 0 ? (b1.initial / mandatoryMonthly) : 0;
-
-      const totalBucketMonthlyFlow = b0.monthly + b1.monthly + b2.monthly + b3.monthly;
-      const totalBucketAnnualFlow = totalBucketMonthlyFlow * 12;
-      const remainingAvailableAnnual = annualRemaining - totalBucketAnnualFlow;
+      const survivalMonthly = expHousing + expEssentials + debtMetrics.totalMonthlyOutflow;
+      const liquidMonths = survivalMonthly > 0 ? (b1.initial / survivalMonthly) : 0;
 
       const stripSleepScore = document.getElementById('stripSleepScore')?.textContent || "";
       const stripSleepBadge = document.getElementById('stripSleepBadge')?.textContent || "";
@@ -3090,20 +3048,20 @@
       csv += `Metric,Value,Notes\n`;
       csv += `Total Portfolio Net Assets,$${Math.round(totalPortfolioToday)},Bucket 1 + Bucket 2 + Bucket 3\n`;
       csv += `Long Term Portfolio,$${Math.round(longTermPortfolioToday)},Bucket 2 + Bucket 3 (Equities & Securities)\n`;
-      csv += `Liquid Cushion,$${Math.round(b1.initial)},${liquidMonths.toFixed(1)} Months of Mandatory Living Runway\n`;
+      csv += `Liquid Cushion,$${Math.round(b1.initial)},${liquidMonths.toFixed(1)} Months of Essential Survival Runway (Taxes Excluded)\n`;
       csv += `Bucket 0 (Self-Equity / Human Capital),$${Math.round(b0.initial)},Direct Investment Back Into Yourself\n`;
       csv += `Total Holistic Capital Base,$${Math.round(totalAllCapital)},Buckets 0 + 1 + 2 + 3 Combined\n`;
       csv += `Gross Annual Cash Inflow,$${Math.round(grossAnnualIncome)},Across all active income streams\n`;
-      csv += `Annual Living Expenses Taxes & Debt Service,$${Math.round(totalMonthly * 12)},Mandatory & Discretionary Outflows\n`;
+      csv += `Annual Living Expenses & Taxes,$${Math.round(totalMonthly * 12)},Mandatory & Discretionary Outflows\n`;
       csv += `Annual Remaining Surplus,$${Math.round(annualRemaining)},Net cash remaining after living outflows\n`;
       csv += `Sleep at Night Score,"${stripSleepScore} (${stripSleepBadge})",Fiduciary Risk & Runway Resilience Index\n`;
       csv += `True Wealth Score,"${stripTrueWealthScore} (${stripTrueWealthBadge})",4-Quadrant Holistic Human Flourishing Index\n`;
-      csv += `5-Year Projected Net Worth Milestone,$${Math.round(projection[4].total)},Projected total at year 5\n`;
-      csv += `10-Year Projected Net Worth Milestone,$${Math.round(projection[9].total)},Projected total at year 10\n`;
-      csv += `25-Year Projected Net Worth Milestone,$${Math.round(projection[24].total)},Projected total at year 25\n\n`;
+      csv += `5-Year Projected Net Worth Milestone,$${Math.round(projection[4]?.total || 0)},Projected total at year 5\n`;
+      csv += `10-Year Projected Net Worth Milestone,$${Math.round(projection[9]?.total || 0)},Projected total at year 10\n`;
+      csv += `25-Year Projected Net Worth Milestone,$${Math.round(projection[24]?.total || 0)},Projected total at year 25\n\n`;
 
       csv += `=========================================================================\n`;
-      csv += `TAB 2: INCOME & CASH FLOW ENGINE\n`;
+      csv += `TAB 2: INCOME, BAD DEBT & CASH FLOW ENGINE\n`;
       csv += `=========================================================================\n`;
       csv += `Stream #,Income Stream Name,Annual Amount ($),Escalation Rate (%/yr),Reinvestment Target (%),Category\n`;
       incomeStreams.forEach((s, idx) => {
@@ -3111,174 +3069,27 @@
       });
       csv += `Total Gross Annual Inflow,${grossAnnualIncome},Blended Growth: ${blendedGrowthRate.toFixed(1)}%/yr\n\n`;
 
-      csv += `BAD DEBT LIABILITIES & PAYOFF OUTFLOW ENGINE\n`;
-      csv += `Debt #,Liability Name,Principal Balance ($),APR (%),Target Horizon (mo),Calculated Monthly Outflow ($),Total Est Interest ($)\n`;
+      csv += `BAD DEBT SCHEDULE\n`;
+      csv += `Debt #,Description,Balance ($),APR (%),Payoff (Months),Monthly Outflow ($)\n`;
       badDebtItems.forEach((d, idx) => {
-        const p = parseFloat(d.principal) || 0;
-        const r = parseFloat(d.rate) || 0;
-        const m = parseInt(d.payoffMonths) || 12;
-        const pmt = calculateDebtMonthlyPayment(p, r, m);
-        const intAmt = calculateDebtTotalInterest(p, r, m);
-        csv += `${idx + 1},"${d.name.replace(/"/g, '""')}",${p},${r}%,${m},${Math.round(pmt)},${Math.round(intAmt)}\n`;
+        const bal = parseFloat(d.balance) || 0;
+        const apr = parseFloat(d.apr) || 0;
+        const n = parseInt(d.months) || 1;
+        const r = (apr / 100) / 12;
+        const pmt = r > 0 ? (bal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)) : (bal / n);
+        csv += `${idx + 1},"${d.name.replace(/"/g, '""')}",${bal},${apr}%,${n},${Math.round(pmt)}\n`;
       });
-      csv += `Total Bad Debt Principal,${debtMetrics.totalPrincipal},Blended APR: ${debtMetrics.blendedRate.toFixed(1)}%,Total Monthly Debt Outflow: $${Math.round(debtMetrics.totalMonthlyOutflow)}\n\n`;
+      csv += `Total Bad Debt Outflow,$${debtMetrics.totalMonthlyOutflow}/mo\n\n`;
 
-      csv += `LIFESTYLE & DEBT OUTFLOWS BREAKDOWN\n`;
+      csv += `LIFESTYLE OUTFLOWS BREAKDOWN\n`;
       csv += `Expense Category,Monthly Amount ($),Annualized Amount ($),Classification\n`;
-      csv += `Mortgage Housing & Property Taxes,${expHousing},${expHousing * 12},Mandatory Living\n`;
-      csv += `Auto Groceries & Other Essentials,${expEssentials},${expEssentials * 12},Mandatory Living\n`;
-      csv += `Estimated Income Taxes & Withholding,${expTaxes},${expTaxes * 12},Mandatory Living\n`;
-      csv += `Bad Debt Accelerated Payoff Outflow,${Math.round(debtMetrics.totalMonthlyOutflow)},${Math.round(debtMetrics.totalMonthlyOutflow * 12)},Mandatory Debt Eradication\n`;
-      csv += `Mandatory Outflows Subtotal,${Math.round(mandatoryMonthly)},${Math.round(mandatoryMonthly * 12)},MANDATORY TOTAL\n`;
+      csv += `Mortgage Housing & Property Taxes,${expHousing},${expHousing * 12},Mandatory\n`;
+      csv += `Auto Groceries & Other Essentials,${expEssentials},${expEssentials * 12},Mandatory\n`;
+      csv += `Bad Debt Scheduled Service,${debtMetrics.totalMonthlyOutflow},${debtMetrics.totalMonthlyOutflow * 12},Mandatory\n`;
+      csv += `Estimated Income Taxes & Withholding,${expTaxes},${expTaxes * 12},Mandatory\n`;
+      csv += `Mandatory Outflows Subtotal,${mandatoryMonthly},${mandatoryMonthly * 12},MANDATORY TOTAL\n`;
       csv += `Lifestyle & Travel,${expLifestyle},${expLifestyle * 12},Discretionary\n`;
-      csv += `Total Monthly Outflows,${Math.round(totalMonthly)},${Math.round(totalMonthly * 12)},ALL COMBINED OUTFLOWS\n`;
-      csv += `Baseline Cash Surplus from Income,${Math.round(annualRemaining)},${Math.round(annualRemaining)},Net Inflow Minus Total Outflows\n`;
-      csv += `Total Scheduled Bucket Investment Flows,${Math.round(totalBucketAnnualFlow)},${Math.round(totalBucketAnnualFlow)},Sum of B0 + B1 + B2 + B3 Flows\n`;
-      csv += `Net Remaining Available to Invest,${Math.round(remainingAvailableAnnual)},${Math.round(remainingAvailableAnnual)},Unallocated Investable Capacity\n\n`;
-
-      csv += `10-YEAR INFLOW VS OUTFLOW ESCALATION SCHEDULE\n`;
-      csv += `Year,Projected Gross Inflows ($),Projected Outflows & Taxes ($),Net Annual Investable Surplus ($)\n`;
-      for (let y = 1; y <= 10; y++) {
-        let yrInflow = 0;
-        incomeStreams.forEach(s => {
-          yrInflow += s.amount * Math.pow(1 + (s.growthRate / 100), y - 1);
-        });
-        
-        let yrDebtPayment = 0;
-        badDebtItems.forEach(d => {
-          const m = parseInt(d.payoffMonths) || 12;
-          const monthsInYearY = Math.max(0, Math.min(12, m - (y - 1) * 12));
-          if (monthsInYearY > 0) {
-            const p = parseFloat(d.principal) || 0;
-            const r = parseFloat(d.rate) || 0;
-            const pmt = calculateDebtMonthlyPayment(p, r, m);
-            yrDebtPayment += pmt * monthsInYearY;
-          }
-        });
-
-        const yrLivingOutflow = (livingMonthlySubtotal * 12) * Math.pow(1.03, y - 1);
-        const yrTotalOutflow = yrLivingOutflow + yrDebtPayment;
-        csv += `Year ${y},${Math.round(yrInflow)},${Math.round(yrTotalOutflow)},${Math.round(Math.max(0, yrInflow - yrTotalOutflow))}\n`;
-      }
-      csv += `\n`;
-
-      csv += `=========================================================================\n`;
-      csv += `TAB 3: MULTI-BUCKET WEALTH ENGINE (BUCKETS 0 TO 3)\n`;
-      csv += `=========================================================================\n`;
-      csv += `Bucket Identifier,Horizon,Invested In,Investment Thesis & Comments,Initial Balance ($),Expected Annual Return (%),Phase 1 Monthly Flow ($/mo),Transition Year,Phase 2 Action,Phase 2 Flow ($/mo)\n`;
-      
-      const b0Invested = document.getElementById('b0InvestedIn')?.value || "";
-      const b0Comments = document.getElementById('b0Comments')?.value || "";
-      const b1Invested = document.getElementById('b1InvestedIn')?.value || "";
-      const b1Comments = document.getElementById('b1Comments')?.value || "";
-      const b2Invested = document.getElementById('b2InvestedIn')?.value || "";
-      const b2Comments = document.getElementById('b2Comments')?.value || "";
-      const b3Invested = document.getElementById('b3InvestedIn')?.value || "";
-      const b3Comments = document.getElementById('b3Comments')?.value || "";
-
-      csv += `"Bucket 0: Invest in Yourself","Lifelong / Immediate","${b0Invested.replace(/"/g, '""')}","${b0Comments.replace(/"/g, '""')}",${b0.initial},${(b0.ret * 100).toFixed(1)}%,${b0.monthly},Yr ${b0.transYear},"${b0.p2Action}",${b0.p2Amount}\n`;
-      csv += `"Bucket 1: Liquidity & Stability","0-5 Years","${b1Invested.replace(/"/g, '""')}","${b1Comments.replace(/"/g, '""')}",${b1.initial},${(b1.ret * 100).toFixed(1)}%,${b1.monthly},Yr ${b1.transYear},"${b1.p2Action}",${b1.p2Amount}\n`;
-      csv += `"Bucket 2: Equities & Securities","5+ Years","${b2Invested.replace(/"/g, '""')}","${b2Comments.replace(/"/g, '""')}",${b2.initial},${(b2.ret * 100).toFixed(1)}%,${b2.monthly},Yr ${b2.transYear},"${b2.p2Action}",${b2.p2Amount}\n`;
-      csv += `"Bucket 3: Equities & Securities","5+ Years","${b3Invested.replace(/"/g, '""')}","${b3Comments.replace(/"/g, '""')}",${b3.initial},${(b3.ret * 100).toFixed(1)}%,${b3.monthly},Yr ${b3.transYear},"${b3.p2Action}",${b3.p2Amount}\n\n`;
-
-      csv += `BUCKET 1 PLANNED BIG-TICKET OUTFLOWS\n`;
-      csv += `Item #,Description,Scheduled Year,Amount ($)\n`;
-      bigTicketItems.forEach((item, idx) => {
-        csv += `${idx + 1},"${item.name.replace(/"/g, '""')}",Year ${item.year},${item.amount}\n`;
-      });
-      csv += `\n`;
-
-      csv += `30-YEAR COMPREHENSIVE COMPOUNDING LEDGER\n`;
-      csv += `Year,Milestone Note,Bucket 0 (Self) ($),Bucket 1 (0-5y) ($),Bucket 2 (5+y) ($),Bucket 3 (5+y) ($),Big-Ticket Outflow ($),Annual Compounding Growth ($),Annual Net Flow ($),Total Net Worth ($)\n`;
-      projection.forEach(row => {
-        const isRetire = row.year === parseInt(yearsToRetire) ? "TARGET RETIREMENT MILESTONE" : "";
-        csv += `Yr ${row.year},"${isRetire}",${Math.round(row.b0)},${Math.round(row.b1)},${Math.round(row.b2)},${Math.round(row.b3)},${Math.round(row.b1BigTicket)},${Math.round(row.growth)},${Math.round(row.netFlow)},${Math.round(row.total)}\n`;
-      });
-      csv += `\n`;
-
-      csv += `=========================================================================\n`;
-      csv += `TAB 4: ACCOUNT EFFICIENCY & ASSET LOCATION\n`;
-      csv += `=========================================================================\n`;
-      let totalAllocated = 0, taxFree = 0, taxDef = 0, taxable = 0;
-      accountsList.forEach(a => {
-        totalAllocated += a.balance;
-        if (a.type === 'tax-free') taxFree += a.balance;
-        else if (a.type === 'tax-deferred') taxDef += a.balance;
-        else taxable += a.balance;
-      });
-      const variance = totalAllocated - totalPortfolioToday;
-      const isLowTurnover = !!document.getElementById('chkLowTurnover')?.checked;
-      const shelteredTotal = taxFree + taxDef;
-      const shelteredPct = totalAllocated > 0 ? (shelteredTotal / totalAllocated) * 100 : 0;
-      const effTaxScoreTxt = document.getElementById('effTaxScore')?.textContent || "";
-
-      csv += `Total Market Bucket Capital,$${Math.round(totalPortfolioToday)}\n`;
-      csv += `Total Allocated in Accounts,$${Math.round(totalAllocated)}\n`;
-      csv += `Reconciliation Variance,$${Math.round(variance)},"${variance === 0 ? 'Balanced' : (variance > 0 ? 'Surplus' : 'Deficit')}"\n`;
-      csv += `Tax-Free Accounts Total,$${Math.round(taxFree)},${totalAllocated > 0 ? (taxFree / totalAllocated * 100).toFixed(1) : 0}%\n`;
-      csv += `Tax-Deferred Accounts Total,$${Math.round(taxDef)},${totalAllocated > 0 ? (taxDef / totalAllocated * 100).toFixed(1) : 0}%\n`;
-      csv += `Combined Sheltered Capital (Tax-Deferred + Tax-Free),$${Math.round(shelteredTotal)},${shelteredPct.toFixed(1)}%\n`;
-      csv += `Taxable Accounts Total,$${Math.round(taxable)},${totalAllocated > 0 ? (taxable / totalAllocated * 100).toFixed(1) : 0}%\n`;
-      csv += `Taxable Low Turnover (<25%),${isLowTurnover ? "Yes (Optimized)" : "No (-10 penalty)"}\n`;
-      csv += `Tax Location Score,"${effTaxScoreTxt}"\n\n`;
-
-      csv += `ACCOUNT REGISTER\n`;
-      csv += `Account Name,Tax Classification,Balance ($),Target Wealth Bucket,Share of Assets (%)\n`;
-      accountsList.forEach(a => {
-        const pct = totalAllocated > 0 ? (a.balance / totalAllocated * 100).toFixed(1) : "0.0";
-        csv += `"${a.name.replace(/"/g, '""')}","${a.type}",${a.balance},"${a.bucket.replace(/"/g, '""')}",${pct}%\n`;
-      });
-      csv += `\n`;
-
-      csv += `=========================================================================\n`;
-      csv += `TAB 5: SLEEP BETTER AT NIGHT (FIDUCIARY RISK & GOVERNANCE AUDIT)\n`;
-      csv += `=========================================================================\n`;
-      csv += `Audit Domain,Parameter,Value,Benchmark / Standard\n`;
-      csv += `Sequence-Of-Returns Shield,Liquid Cash Reserves,$${Math.round(b1.initial)},Bucket 1 Cash Equivalents\n`;
-      csv += `Sequence-Of-Returns Shield,Essential Monthly Survival Outflows,$${Math.round(survivalMonthly)},Housing + Essentials + Bad Debt Outflows (Taxes Excluded)\n`;
-      csv += `Sequence-Of-Returns Shield,Bear Market Survival Runway,${runwayMonths.toFixed(1)} Months,Benchmark: 12 to 24 Months\n`;
-      csv += `Peace-Of-Mind Index,Overall Resilience Score,${stripSleepScore},Scale 0-100 (Below 3mo Runway < 30)\n`;
-      csv += `Peace-Of-Mind Index,Audit Classification,"${stripSleepBadge}","Fiduciary Risk Assessment"\n\n`;
-
-      csv += `RISK MITIGATION & ESTATE GOVERNANCE CHECKLIST\n`;
-      csv += `Checklist Item,Status,Fiduciary Purpose\n`;
-      csv += `"Personal Umbrella Liability ($3M-$5M+)","${document.getElementById('chkUmbrella')?.checked ? 'Covered / Active' : 'Action Required'}","Shields personal balance sheet against catastrophic liability exceeding auto/home"\n`;
-      csv += `"Term / Permanent Life Insurance Adequacy","${document.getElementById('chkLife')?.checked ? 'Covered / Active' : 'Action Required'}","Replaces 10-15x income to insulate family from premature loss of earner"\n`;
-      csv += `"Own-Occupation Long-Term Disability","${document.getElementById('chkDisability')?.checked ? 'Covered / Active' : 'Action Required'}","Guarantees earned income flow if unable to practice specific profession"\n`;
-      csv += `"Long-Term Care / Hybrid Asset Protection","${document.getElementById('chkLtc')?.checked ? 'Covered / Active' : 'Action Required'}","Insulates portfolio from elder healthcare and assisted care spend-down"\n`;
-      csv += `"Revocable Living Trust Executed & Funded","${document.getElementById('chkTrust')?.checked ? 'Covered / Active' : 'Action Required'}","Bypasses public probate process and preserves family wealth transfer privacy"\n`;
-      csv += `"Durable Power of Attorney (Financial)","${document.getElementById('chkPOA')?.checked ? 'Covered / Active' : 'Action Required'}","Designates authorized fiduciary representation for unexpected incapacity"\n`;
-      csv += `"Healthcare Directive & Living Will","${document.getElementById('chkProxy')?.checked ? 'Covered / Active' : 'Action Required'}","Medical directives, end-of-life choices, and HIPAA authorization"\n`;
-      csv += `"Annual Beneficiary Designation Audit","${document.getElementById('chkBeneficiaries')?.checked ? 'Covered / Active' : 'Action Required'}","Ensures TOD/POD, 401(k), IRA, and life insurance beneficiaries match trust"\n\n`;
-      
-      const peaceNotes = document.getElementById('peaceNotes')?.value || "";
-      csv += `RIA Advisory Action Items & Follow-Up Notes\n`;
-      csv += `"${peaceNotes.replace(/"/g, '""')}"\n\n`;
-
-      csv += `=========================================================================\n`;
-      csv += `TAB 6: TRUE WEALTH (THE FOUR QUADRANTS DIAGNOSTIC)\n`;
-      csv += `=========================================================================\n`;
-      const trueWealthTotal = document.getElementById('trueWealthScoreTotal')?.textContent || "0";
-      const trueWealthTier = document.getElementById('trueWealthBadge')?.textContent || "";
-      const trueWealthDiag = document.getElementById('trueWealthDiagnosticText')?.textContent || "";
-      
-      csv += `Composite True Wealth Score,${trueWealthTotal} / 100\n`;
-      csv += `Vitality Tier,"${trueWealthTier.replace(/"/g, '""')}"\n`;
-      csv += `Advisor Diagnostic Assessment,"${trueWealthDiag.replace(/"/g, '""')}"\n\n`;
-
-      csv += `Quadrant,Question #,Diagnostic Focus,Rating (1-5),Question Detail\n`;
-      trueWealthQuadrants.forEach(quad => {
-        const qSum = quad.questions.reduce((a, b) => a + (b.val || 0), 0);
-        csv += `"[QUADRANT] ${quad.title} (Score: ${qSum} / 25)","","","","${quad.subtitle}"\n`;
-        quad.questions.forEach((q, qIdx) => {
-          csv += `"${quad.title}",${qIdx + 1},"${q.text.replace(/"/g, '""')}",${q.val},"${q.desc.replace(/"/g, '""')}"\n`;
-        });
-      });
-      csv += `\n`;
-
-      const trueWealthNotes = document.getElementById('trueWealthNotes')?.value || "";
-      csv += `Holistic Discovery & Fiduciary Integration Notes\n`;
-      csv += `"${trueWealthNotes.replace(/"/g, '""')}"\n`;
+      csv += `Total Monthly Outflows,${totalMonthly},${totalMonthly * 12},ALL COMBINED OUTFLOWS\n\n`;
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
@@ -3300,6 +3111,7 @@
       container.innerHTML = '';
 
       accountsList.forEach((acc, idx) => {
+        const isTaxable = (acc.type === 'taxable');
         const card = document.createElement('div');
         card.className = "p-3.5 bg-slate-50 rounded-xl border border-slate-200/90 text-xs space-y-2.5 transition";
         card.innerHTML = `
@@ -3342,6 +3154,18 @@
               </select>
             </div>
           </div>
+
+          ${isTaxable ? `
+            <div class="pt-2 border-t border-slate-200/70 flex items-center justify-between bg-white/70 p-2 rounded-lg">
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" ${acc.lowTurnover ? 'checked' : ''} onchange="updateAccountField(${acc.id}, 'lowTurnover', this.checked)" class="rounded text-brand-600 focus:ring-0 w-4 h-4">
+                <span class="font-semibold text-slate-700 text-xs">Low turnover less than 25%</span>
+              </label>
+              <span class="text-[10px] ${acc.lowTurnover ? 'text-emerald-700 bg-emerald-50 border border-emerald-200' : 'text-rose-700 bg-rose-50 border border-rose-200'} font-bold px-1.5 py-0.5 rounded">
+                ${acc.lowTurnover ? 'Turnover Compliant' : '-10 pts penalty'}
+              </span>
+            </div>
+          ` : ''}
         `;
         container.appendChild(card);
       });
@@ -3355,7 +3179,8 @@
         name: `New Account #${nextId}`,
         type: "tax-deferred",
         balance: 50000,
-        bucket: "Bucket 2 (5+ Yrs Equities & Securities)"
+        bucket: "Bucket 2 (5+ Yrs Equities & Securities)",
+        lowTurnover: true
       });
       renderAccountsTable();
       recalcAll();
@@ -3372,6 +3197,9 @@
       const acc = accountsList.find(a => a.id === id);
       if (acc) {
         acc[field] = value;
+        if (field === 'type') {
+          renderAccountsTable();
+        }
         recalcAll();
       }
     }
@@ -3383,10 +3211,10 @@
       const b3Val = parseFloat(document.getElementById('b3Initial')?.value) || 0;
 
       accountsList = [
-        { id: 1, name: "Roth 401(k) / Roth IRA", type: "tax-free", balance: Math.round(b3Val * 0.8), bucket: "Bucket 3 (5+ Yrs Equities & Securities)" },
-        { id: 2, name: "Traditional 401(k) / IRA", type: "tax-deferred", balance: Math.round(b2Val), bucket: "Bucket 2 (5+ Yrs Equities & Securities)" },
-        { id: 3, name: "Taxable Individual / Joint Brokerage", type: "taxable", balance: Math.round(b1Val), bucket: "Bucket 1 (0-5 Yrs)" },
-        { id: 4, name: "Health Savings Account (HSA)", type: "tax-free", balance: Math.round(b3Val * 0.2), bucket: "Bucket 3 (5+ Yrs Equities & Securities)" }
+        { id: 1, name: "Roth 401(k) / Roth IRA", type: "tax-free", balance: Math.round(b3Val * 0.8), bucket: "Bucket 3 (5+ Yrs Equities & Securities)", lowTurnover: true },
+        { id: 2, name: "Traditional 401(k) / IRA", type: "tax-deferred", balance: Math.round(b2Val), bucket: "Bucket 2 (5+ Yrs Equities & Securities)", lowTurnover: true },
+        { id: 3, name: "Taxable Individual / Joint Brokerage", type: "taxable", balance: Math.round(b1Val), bucket: "Bucket 1 (0-5 Yrs)", lowTurnover: true },
+        { id: 4, name: "Health Savings Account (HSA)", type: "tax-free", balance: Math.round(b3Val * 0.2), bucket: "Bucket 3 (5+ Yrs Equities & Securities)", lowTurnover: true }
       ];
 
       renderAccountsTable();
@@ -3402,6 +3230,7 @@
           acc.type = 'tax-deferred';
         } else if (acc.bucket && acc.bucket.includes('Bucket 1')) {
           acc.type = 'taxable';
+          acc.lowTurnover = true;
         }
       });
       renderAccountsTable();
@@ -3414,18 +3243,28 @@
       let taxFree = 0;
       let taxDef = 0;
       let taxable = 0;
+      let hasTaxableHighTurnover = false;
+      let hasTaxableAccounts = false;
 
       accountsList.forEach(acc => {
         const bal = parseFloat(acc.balance) || 0;
         totalAllocated += bal;
-        if (acc.type === 'tax-free') taxFree += bal;
-        else if (acc.type === 'tax-deferred') taxDef += bal;
-        else if (acc.type === 'taxable') taxable += bal;
+        if (acc.type === 'tax-free') {
+          taxFree += bal;
+        } else if (acc.type === 'tax-deferred') {
+          taxDef += bal;
+        } else if (acc.type === 'taxable') {
+          taxable += bal;
+          hasTaxableAccounts = true;
+          if (!acc.lowTurnover) {
+            hasTaxableHighTurnover = true;
+          }
+        }
       });
 
       const effTotalBucketCap = document.getElementById('effTotalBucketCap');
       const effTotalAllocated = document.getElementById('effTotalAllocated');
-      const effVariance = document.getElementById('effVariance');
+      const effShelteredRatio = document.getElementById('effShelteredRatio');
       const effTaxScore = document.getElementById('effTaxScore');
       const effTaxFreeVal = document.getElementById('effTaxFreeVal');
       const effTaxDefVal = document.getElementById('effTaxDefVal');
@@ -3434,18 +3273,10 @@
       if (effTotalBucketCap) effTotalBucketCap.textContent = formatCurrency(totalBucketCap);
       if (effTotalAllocated) effTotalAllocated.textContent = formatCurrency(totalAllocated);
 
-      const variance = totalAllocated - totalBucketCap;
-      if (effVariance) {
-        if (Math.abs(variance) < 100) {
-          effVariance.className = "text-base font-bold text-emerald-600";
-          effVariance.textContent = "$0 (Balanced)";
-        } else if (variance > 0) {
-          effVariance.className = "text-base font-bold text-indigo-600";
-          effVariance.textContent = `+${formatCurrency(variance)} (Surplus)`;
-        } else {
-          effVariance.className = "text-base font-bold text-rose-600";
-          effVariance.textContent = `${formatCurrency(variance)} (Deficit)`;
-        }
+      const shelteredTotal = taxFree + taxDef;
+      const shelteredPct = totalAllocated > 0 ? (shelteredTotal / totalAllocated) * 100 : 0;
+      if (effShelteredRatio) {
+        effShelteredRatio.textContent = `${shelteredPct.toFixed(1)}%`;
       }
 
       const pctFree = totalAllocated > 0 ? (taxFree / totalAllocated * 100).toFixed(0) : 0;
@@ -3456,44 +3287,40 @@
       if (effTaxDefVal) effTaxDefVal.textContent = `${formatCurrency(taxDef)} (${pctDef}%)`;
       if (effTaxableVal) effTaxableVal.textContent = `${formatCurrency(taxable)} (${pctTaxable}%)`;
 
-      // NEW SCORING LOGIC:
-      // 1. Calculate percentage in tax-deferred + tax-free
-      const shelteredTotal = taxFree + taxDef;
-      const shelteredPct = totalAllocated > 0 ? (shelteredTotal / totalAllocated) * 100 : 0;
-
-      // 2. Base score: 100 if >= 70%. For every 10% drop below 70%, subtract 5 points
-      let baseScore = 100;
+      // Scoring: 100 if at least 70% in tax deferred or tax free.
+      // As percentage drops 10%, score drops 5 points for every 10% decline.
+      // -10 pts if taxable account has high turnover (lowTurnover == false).
+      let score = 100;
       if (shelteredPct < 70) {
-        const dropBrackets = Math.ceil((70 - shelteredPct) / 10);
-        baseScore = 100 - (dropBrackets * 5);
+        const dropRatio = Math.floor((69.9999 - shelteredPct) / 10) + 1;
+        score -= (dropRatio * 5);
       }
 
-      // 3. Low turnover check (<25%) in taxable brokerage: -10 pts if unchecked
-      const isLowTurnover = !!document.getElementById('chkLowTurnover')?.checked;
-      let turnoverPenalty = isLowTurnover ? 0 : 10;
-
-      let effScore = baseScore - turnoverPenalty;
-      effScore = Math.max(0, Math.min(100, Math.round(effScore)));
-
-      let ratingLabel = "Superior";
-      if (effScore >= 90) {
-        ratingLabel = "Superior";
-      } else if (effScore >= 75) {
-        ratingLabel = "Strong";
-      } else if (effScore >= 60) {
-        ratingLabel = "Moderate";
-      } else {
-        ratingLabel = "Needs Tuning";
+      if (hasTaxableHighTurnover) {
+        score -= 10;
       }
+      score = Math.max(0, Math.min(100, score));
 
       if (effTaxScore) {
-        effTaxScore.textContent = `${effScore}/100 (${ratingLabel})`;
-        if (effScore >= 85) {
-          effTaxScore.className = "text-base font-bold text-indigo-600";
-        } else if (effScore >= 70) {
-          effTaxScore.className = "text-base font-bold text-emerald-600";
+        let label = "Optimal";
+        if (score < 70) label = "Needs Rebalancing";
+        else if (score < 85) label = "Good";
+        else if (score < 100) label = "Strong";
+        effTaxScore.textContent = `${score}/100 (${label})`;
+      }
+
+      const auditBanner = document.getElementById('taxableTurnoverAuditBanner');
+      const auditText = document.getElementById('taxableTurnoverAuditText');
+      if (auditBanner && auditText) {
+        if (!hasTaxableAccounts) {
+          auditBanner.className = "p-2.5 rounded-xl text-[11px] flex items-center justify-between border bg-slate-50 border-slate-200 text-slate-700";
+          auditText.textContent = "No Taxable Brokerage Accounts";
+        } else if (hasTaxableHighTurnover) {
+          auditBanner.className = "p-2.5 rounded-xl text-[11px] flex items-center justify-between border bg-rose-50 border-rose-200 text-rose-800";
+          auditText.textContent = "High Turnover Drag Detected (-10 pts)";
         } else {
-          effTaxScore.className = "text-base font-bold text-amber-600";
+          auditBanner.className = "p-2.5 rounded-xl text-[11px] flex items-center justify-between border bg-emerald-50 border-emerald-200 text-emerald-800";
+          auditText.textContent = "Low Turnover (<25%) Compliant";
         }
       }
 
@@ -3551,9 +3378,12 @@
     function updatePeaceScore() {
       const expHousing = parseFloat(document.getElementById('expHousing')?.value) || 0;
       const expEssentials = parseFloat(document.getElementById('expEssentials')?.value) || 0;
+      
       const debtMetrics = getBadDebtTotals();
-      // If income goes to zero, income taxes drop to zero; exclude expTaxes from the survival runway
-      const survivalMonthly = expHousing + expEssentials + debtMetrics.totalMonthlyOutflow;
+      const badDebtMonthly = debtMetrics.totalMonthlyOutflow;
+
+      // Essential survival monthly outflows (Housing + Essentials + Bad debt, without taxes)
+      const survivalMonthly = expHousing + expEssentials + badDebtMonthly;
 
       const b1Initial = parseFloat(document.getElementById('b1Initial')?.value) || 0;
       const runwayMonths = survivalMonthly > 0 ? (b1Initial / survivalMonthly) : 0;
@@ -3568,6 +3398,7 @@
       if (shieldRunwayMonths) shieldRunwayMonths.textContent = `${runwayMonths.toFixed(1)} Months`;
       if (shieldRunwayBadge) shieldRunwayBadge.textContent = `${runwayMonths.toFixed(0)} Mo Runway`;
 
+      // 8 items, 3 pts each = 24 points max
       const checkIds = ['chkUmbrella', 'chkLife', 'chkDisability', 'chkLtc', 'chkTrust', 'chkPOA', 'chkProxy', 'chkBeneficiaries'];
       let checkedCount = 0;
       checkIds.forEach(id => {
@@ -3575,25 +3406,23 @@
       });
       const checklistScore = checkedCount * 3;
 
-      let runwayScore = 0;
-      if (runwayMonths >= 12) {
-        runwayScore = 76;
-      } else if (runwayMonths >= 3) {
-        runwayScore = ((runwayMonths - 3) / 9) * 76;
-      } else {
-        runwayScore = 0;
-      }
+      // For every month of survival runway add 12 points
+      const runwayScore = runwayMonths * 12;
 
       let totalSleepScore = Math.round(runwayScore + checklistScore);
       totalSleepScore = Math.min(100, Math.max(0, totalSleepScore));
 
       const peaceScoreLarge = document.getElementById('peaceScoreLarge');
       const peaceScoreStatusText = document.getElementById('peaceScoreStatusText');
+      const peaceScoreBreakdown = document.getElementById('peaceScoreBreakdown');
       const stripSleepScore = document.getElementById('stripSleepScore');
       const stripSleepBadge = document.getElementById('stripSleepBadge');
 
       if (peaceScoreLarge) peaceScoreLarge.textContent = totalSleepScore;
       if (stripSleepScore) stripSleepScore.textContent = `${totalSleepScore}/100`;
+      if (peaceScoreBreakdown) {
+        peaceScoreBreakdown.textContent = `Runway: ${Math.round(runwayScore)} pts (${runwayMonths.toFixed(1)} mo × 12) | Checklist: ${checklistScore}/24 pts`;
+      }
 
       let badgeClass = '';
       let badgeText = '';
@@ -3774,7 +3603,10 @@
       const expEssentials = parseFloat(document.getElementById('expEssentials')?.value) || 0;
       const expLifestyle = parseFloat(document.getElementById('expLifestyle')?.value) || 0;
       const expTaxes = parseFloat(document.getElementById('expTaxes')?.value) || 0;
-      const baseLivingAnnual = (expHousing + expEssentials + expLifestyle + expTaxes) * 12;
+
+      const debtMetrics = getBadDebtTotals();
+      const annualDebtService = debtMetrics.totalMonthlyOutflow * 12;
+      const baseExpensesExDebt = (expHousing + expEssentials + expLifestyle + expTaxes) * 12;
 
       const labels = [];
       const incomeData = [];
@@ -3786,22 +3618,22 @@
         incomeStreams.forEach(s => {
           totalYrIncome += s.amount * Math.pow(1 + (s.growthRate / 100), y - 1);
         });
+        incomeData.push(Math.round(totalYrIncome));
 
-        let yrDebtPayment = 0;
+        let debtForYear = 0;
         badDebtItems.forEach(d => {
-          const m = parseInt(d.payoffMonths) || 12;
-          const monthsInYearY = Math.max(0, Math.min(12, m - (y - 1) * 12));
-          if (monthsInYearY > 0) {
-            const p = parseFloat(d.principal) || 0;
-            const r = parseFloat(d.rate) || 0;
-            const pmt = calculateDebtMonthlyPayment(p, r, m);
-            yrDebtPayment += pmt * monthsInYearY;
+          const payoffYrs = (parseInt(d.months) || 1) / 12;
+          if (y <= Math.ceil(payoffYrs)) {
+            const bal = parseFloat(d.balance) || 0;
+            const apr = parseFloat(d.apr) || 0;
+            const n = parseInt(d.months) || 1;
+            const r = (apr / 100) / 12;
+            const pmt = r > 0 ? (bal * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)) : (bal / n);
+            debtForYear += pmt * 12;
           }
         });
 
-        const livingInflated = baseLivingAnnual * Math.pow(1.03, y - 1);
-        incomeData.push(Math.round(totalYrIncome));
-        expenseData.push(Math.round(livingInflated + yrDebtPayment));
+        expenseData.push(Math.round((baseExpensesExDebt * Math.pow(1.03, y - 1)) + debtForYear));
       }
 
       if (incomeComparisonChartInstance) {
@@ -3824,9 +3656,9 @@
               borderRadius: 6
             },
             {
-              label: 'Outflows (Living + Debt Payoff)',
+              label: 'Living Outflows, Debt & Taxes (3% Inflation)',
               data: expenseData,
-              backgroundColor: 'rgba(244, 63, 94, 0.8)',
+              backgroundColor: 'rgba(148, 163, 184, 0.7)',
               borderRadius: 6
             }
           ]
@@ -3859,8 +3691,6 @@
         }
       });
     }
-
-    updatePeaceScore();
   </script>
 </body>
 </html>
