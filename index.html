@@ -1204,7 +1204,7 @@
             </div>
             <h2 class="text-xl sm:text-2xl font-bold">The "Sleep Better At Night" Protocol</h2>
             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Every month of survival runway provides 12 points, plus up to 24 points across 8 risk governance items (3 pts each).
+              Every month of survival runway provides 12 points (up to a maximum of 76 points in Section 1), plus 3 points per checklist item in Section 2 (max 12 pts) and Section 3 (max 12 pts) for a total out of 100.
             </p>
           </div>
 
@@ -1215,7 +1215,7 @@
               <span class="text-sm font-semibold text-slate-300">/100</span>
             </div>
             <span id="peaceScoreStatusText" class="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 border border-emerald-400/30">Well Protected</span>
-            <span id="peaceScoreBreakdown" class="text-[10px] text-slate-300 font-mono mt-1">Runway: 61 pts | Checklist: 24 pts</span>
+            <span id="peaceScoreBreakdown" class="text-[10px] text-slate-300 font-mono mt-1">Sec 1: 76/76 | Sec 2: 12/12 | Sec 3: 12/12</span>
           </div>
         </div>
       </div>
@@ -1232,7 +1232,7 @@
           </div>
 
           <p class="text-xs text-slate-600 leading-relaxed">
-            By maintaining dedicated cash & stable reserves in Bucket 1, clients never have to liquidate equities at depressed prices. (If income ceases, earned income tax drops to $0, so runway is calculated on essential survival outflows: Housing, Essentials, and Bad Debt).
+            By maintaining dedicated cash & stable reserves in Bucket 1, clients never have to liquidate equities at depressed prices. (If income ceases, earned income tax drops to $0, so runway is calculated on essential survival outflows: Housing, Essentials, and Bad Debt). Earns 12 pts/mo up to 76 pts max.
           </p>
 
           <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-100 space-y-2 text-xs">
@@ -1248,6 +1248,10 @@
               <span class="text-slate-700">Bear Market Survival Runway:</span>
               <span id="shieldRunwayMonths" class="text-emerald-700 font-bold">0 Months</span>
             </div>
+            <div class="flex justify-between text-[11px] pt-1 text-slate-500 font-medium border-t border-dashed border-slate-200">
+              <span>Section 1 Score (max 76 pts):</span>
+              <span id="shieldSectionScore" class="font-bold text-emerald-700">0 / 76 pts</span>
+            </div>
           </div>
         </div>
 
@@ -1257,11 +1261,11 @@
               <i data-lucide="umbrella" class="w-4 h-4 text-brand-600"></i>
               <span>2. Catastrophic Risk Defense</span>
             </h3>
-            <span class="text-xs text-slate-400">3 pts each</span>
+            <span id="sec2ScoreBadge" class="text-xs text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded">0 / 12 pts</span>
           </div>
 
           <p class="text-xs text-slate-600">
-            Assess adequacy across core non-investment risk vectors to guarantee sleep quality.
+            Assess adequacy across core non-investment risk vectors to guarantee sleep quality (3 pts each, max 12 pts).
           </p>
 
           <div class="space-y-2.5 text-xs" id="insuranceChecklist">
@@ -1305,11 +1309,11 @@
               <i data-lucide="file-check" class="w-4 h-4 text-indigo-600"></i>
               <span>3. Estate & Legacy Governance</span>
             </h3>
-            <span class="text-xs text-slate-400">3 pts each</span>
+            <span id="sec3ScoreBadge" class="text-xs text-indigo-700 font-bold bg-indigo-50 px-2 py-0.5 rounded">0 / 12 pts</span>
           </div>
 
           <p class="text-xs text-slate-600">
-            Prevent probate nightmare and ensure wealth passes efficiently according to exact intentions.
+            Prevent probate nightmare and ensure wealth passes efficiently according to exact intentions (3 pts each, max 12 pts).
           </p>
 
           <div class="space-y-2.5 text-xs" id="estateChecklist">
@@ -3392,24 +3396,39 @@
       const shieldMonthlySpend = document.getElementById('shieldMonthlySpend');
       const shieldRunwayMonths = document.getElementById('shieldRunwayMonths');
       const shieldRunwayBadge = document.getElementById('shieldRunwayBadge');
+      const shieldSectionScore = document.getElementById('shieldSectionScore');
+      const sec2ScoreBadge = document.getElementById('sec2ScoreBadge');
+      const sec3ScoreBadge = document.getElementById('sec3ScoreBadge');
 
       if (shieldB1Cash) shieldB1Cash.textContent = formatCurrency(b1Initial);
       if (shieldMonthlySpend) shieldMonthlySpend.textContent = formatCurrency(survivalMonthly);
       if (shieldRunwayMonths) shieldRunwayMonths.textContent = `${runwayMonths.toFixed(1)} Months`;
       if (shieldRunwayBadge) shieldRunwayBadge.textContent = `${runwayMonths.toFixed(0)} Mo Runway`;
 
-      // 8 items, 3 pts each = 24 points max
-      const checkIds = ['chkUmbrella', 'chkLife', 'chkDisability', 'chkLtc', 'chkTrust', 'chkPOA', 'chkProxy', 'chkBeneficiaries'];
-      let checkedCount = 0;
-      checkIds.forEach(id => {
-        if (document.getElementById(id)?.checked) checkedCount++;
+      // Section 1: 12 pts per month of survival runway, capped at 76 points max
+      const sec1Score = Math.min(76, Math.max(0, Math.round(runwayMonths * 12)));
+      if (shieldSectionScore) shieldSectionScore.textContent = `${sec1Score} / 76 pts`;
+
+      // Section 2: Catastrophic Risk Defense (4 items, 3 pts each = max 12 pts)
+      const sec2CheckIds = ['chkUmbrella', 'chkLife', 'chkDisability', 'chkLtc'];
+      let sec2Count = 0;
+      sec2CheckIds.forEach(id => {
+        if (document.getElementById(id)?.checked) sec2Count++;
       });
-      const checklistScore = checkedCount * 3;
+      const sec2Score = sec2Count * 3;
+      if (sec2ScoreBadge) sec2ScoreBadge.textContent = `${sec2Score} / 12 pts`;
 
-      // For every month of survival runway add 12 points
-      const runwayScore = runwayMonths * 12;
+      // Section 3: Estate & Legacy Governance (4 items, 3 pts each = max 12 pts)
+      const sec3CheckIds = ['chkTrust', 'chkPOA', 'chkProxy', 'chkBeneficiaries'];
+      let sec3Count = 0;
+      sec3CheckIds.forEach(id => {
+        if (document.getElementById(id)?.checked) sec3Count++;
+      });
+      const sec3Score = sec3Count * 3;
+      if (sec3ScoreBadge) sec3ScoreBadge.textContent = `${sec3Score} / 12 pts`;
 
-      let totalSleepScore = Math.round(runwayScore + checklistScore);
+      // Total Peace of Mind Score (max 76 + 12 + 12 = 100)
+      let totalSleepScore = sec1Score + sec2Score + sec3Score;
       totalSleepScore = Math.min(100, Math.max(0, totalSleepScore));
 
       const peaceScoreLarge = document.getElementById('peaceScoreLarge');
@@ -3421,7 +3440,7 @@
       if (peaceScoreLarge) peaceScoreLarge.textContent = totalSleepScore;
       if (stripSleepScore) stripSleepScore.textContent = `${totalSleepScore}/100`;
       if (peaceScoreBreakdown) {
-        peaceScoreBreakdown.textContent = `Runway: ${Math.round(runwayScore)} pts (${runwayMonths.toFixed(1)} mo × 12) | Checklist: ${checklistScore}/24 pts`;
+        peaceScoreBreakdown.textContent = `Sec 1: ${sec1Score}/76 | Sec 2: ${sec2Score}/12 | Sec 3: ${sec3Score}/12`;
       }
 
       let badgeClass = '';
